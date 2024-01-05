@@ -1,0 +1,83 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.log{
+    width: 50px;
+    height: 43px;
+    object-fit: cover;
+}
+.lin{
+    color: rgb(102,102,102);
+  
+    
+
+}
+.lin:hover{
+    color: rgba(0, 0, 0, 0.566);
+}
+.lin:focus-within{
+    color: rgb(19, 19, 19);
+    
+    text-decoration: underline !important;
+}
+.bluh{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    object-fit: cover !important;
+}
+.bluk{
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    object-fit: cover !important;
+}
+.blum{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    object-fit: cover !important;
+}
+.kim{
+    height: 460px;
+    width: 100% !important;
+    object-fit: cover !important;
+
+}
+.hom{
+    height: 170px;
+    margin-top: 100px;
+}
+.may:hover{
+    animation: flip; /* referring directly to the animation's @keyframe declaration */
+    animation-duration: 2s;
+    
+}
+.reverse{
+    display: flex;
+    flex-direction: column-reverse;
+    border: 1px solid gold ;
+    border-radius: 20px;
+}
+.news{
+   width: 100%;
+   height: 400px !important;
+
+   border-radius: 30px;  
+   object-fit: cover;
+}
+.drop:focus-within .down{
+    display: block !important;
+}
+.dots{
+    border:none !important;
+    background:none;
+    color: white;
+    font-size: 30px;
+
+    
+    
+    /* transition: 2s  ; */
+     /* right: -3000px; */
+}
