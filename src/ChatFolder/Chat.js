@@ -2,8 +2,24 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { ImFilePicture } from "react-icons/im";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const Chat = () => {
+  const [showAllFriend, setshowAllFriend] = useState([])
+  const [display, setdisplay] = useState({});
+
+  const {isfetching, allFriend, isfetchingError} = useSelector((state)=> state.FriendSlice)
+  console.log(allFriend);
+  console.log(showAllFriend);  
+  useEffect(() => {
+    setshowAllFriend(allFriend);
+  }, []); // Empty dependency array to run the effect only once on mount
+  
+  // Rest of your component code
+  
+ 
+  const dispatch = useDispatch()
     const navigate = useNavigate()
     const token = localStorage.getItem("Ln Token");
     const [first, setfirst] = useState({})
@@ -16,9 +32,8 @@ const Chat = () => {
             Authorization: `bearer ${token}`
           }
         }).then((res)=>{
-            console.log(res.data.message)
-            setfirst(res.data.user)
             console.log(res.data.user)
+            setfirst(res.data.user)
           })
           .catch((error)=>{
             console.log(error);
@@ -30,32 +45,38 @@ const Chat = () => {
           
         }, [])
 
-     useEffect(() => {
-    axios.get("http://localhost:4345/users/findallUser")
-    .then((res)=>{
-        console.log(res)
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
-     }, [])
-     
-     const pressme =()=>{
+     const pressme =(el,i)=>{
       setsecond(false)
       setfirs(true)
+      console.log(el);
+      console.log(i);
+      setdisplay(el)
+      
+      
      }
      function sendText() {
       console.log(inputtext);
      }
 
 
-
+     const capitalizeFirstLetter = (word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    };
   return (
     <>
        <main className='container-fluid  row'> 
           <div className='col-12 col-md-4  bg-dark text-light'>
             <h2>Chats</h2><hr />
-            <p onClick={pressme}>Ajani </p>
+            {showAllFriend&&
+              showAllFriend.map((el,i)=>(
+                <div key={i}> 
+                  <div onClick={()=> pressme(el,i)} className='d-flex bg-white text-dark align-items-center rounded  border my-1 p-1'>
+                  <img src={el.profilePic} className='bluh' alt="" srcset="" />
+                  <p className='mx-2 mt-3'>{capitalizeFirstLetter(el.username)} </p>
+                  </div>
+                </div>
+              ))
+            }
            
 
           </div>
@@ -64,8 +85,8 @@ const Chat = () => {
               <main>
 
             <div className='d-flex align-items-center  p-2 bg-light rounded'>
-              <img src={require("../image/3.jpg")} className='bluh mx-2' alt="" srcset="" />
-              <h3>UserName</h3>
+              <img src={display.profilePic} className='bluh mx-2' alt="" srcset="" />
+              <h3>{display.username}</h3>
             </div><hr />
             <div>
               
@@ -84,7 +105,7 @@ const Chat = () => {
             }
           </div>
         </main>  
-    </>
+    </> 
   )
 }
 

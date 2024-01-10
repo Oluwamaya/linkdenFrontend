@@ -73,12 +73,36 @@ const Notification = () => {
        friendemail: el.from,
        notificationId: el._id
    }
-   console.log(value);
    axios.post("http://localhost:4345/users/acceptFriend", {value}
    ).then((res)=>{
      console.log(res);
+    //  toast(res.data.message)
+    toast.success(res.data.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light"
+    });
+      const updatedNotifications = [...notifications];
+      updatedNotifications.splice(i, 1);
+      setNotifications(updatedNotifications);
+
    }).catch((error)=>{
      console.log(error);
+     toast.error(error, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
    })
   }
   function RejectFriend(el, i) {

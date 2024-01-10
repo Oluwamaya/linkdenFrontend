@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { fetchingfriends, fetchedFriends, fetchingError } from '../Redux/Slice';
+import { isfetchingFriend, fetchedAllFriends, fetchingError} from '../Redux/FriendSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +12,9 @@ import { FaLongArrowAltLeft } from "react-icons/fa";
 
 const NetworkPage = () => {
   const navigate = useNavigate()
-  const distpatch = useDispatch()
+  const dispatch = useDispatch()
+  const {isfetching, allFriend, isfetchingError} = useSelector((state)=> state.FriendSlice)
+  console.log(allFriend);
 
   const {id} =useParams()
   // console.log(id)
@@ -46,24 +48,25 @@ const NetworkPage = () => {
   // console.log(friendId)
   const token = localStorage.getItem("Ln Token");
 
+  
   useEffect(() => {
     axios.get("http://localhost:4345/users/verify",{
-
       headers:{
         Authorization: `bearer ${token}`
       }
     }).then((res)=>{
-          setshowFriends(res.data.user.friends)
-          console.log(showFriends);
+        console.log(res.data.user)
         setdisInfo(res.data.user)
-        console.log(disInfo)
+        console.log(disInfo);
+        
+        // setmessage(res.data.user)
+        // console.log(res.data.user)
       })
       .catch((error)=>{
-        console.log(error);
         if (error.response.data.message === 'Operation `signups.findOne()` buffering timed out after 10000ms') {
           toast(error.response.statusText)
-          navigate("/sign")
         }else{
+        console.log(error);
         toast(error.response.data.message)
         navigate("/sign")
         }
@@ -74,6 +77,30 @@ const NetworkPage = () => {
      
     
     
+    function getallFriends() {
+      const identity = disInfo._id;
+      console.log(identity);
+    
+      axios.post("http://localhost:4345/users/fetch", { identity })
+        .then((res) => {
+          console.log(res);
+        setshowFriends(res.data.arr) 
+        dispatch(fetchedAllFriends(res.data.arr))
+      })
+      .catch((error) => {
+          console.log(error);
+          dispatch(fetchingError(error))
+        });
+      }
+      // console.log(fetchedAllFriends);
+    
+    useEffect(() => {
+      getallFriends();
+    }, [disInfo._id]); // Add disInfo._id as a dependency
+    
+      
+
+
    
     useEffect(() => {
       // Load friend status from localStorage on component mount
@@ -130,22 +157,22 @@ const NetworkPage = () => {
      
   }
   const userId = disInfo._id
-  useEffect(() => {
-    const getMessages = async () => {   
-        const friendid = friendId._id
-        console.log(friendid , userId);
-        // Use friendId directly from the component props
-        await axios.get(`http://localhost:4345/users/showmessage/${userId}/${friendid}`
-        ).then((res)=>{
-          console.log(res);
-        setmessaging(res.data.messages);
-        }).catch((error)=>{
-        console.log(error);
-      })
-    }
-    // Call the function to fetch messages
-    getMessages();
-  }, [userId, friendId]); 
+  // useEffect(() => {
+  //   const getMessages = async () => {   
+  //       const friendid = friendId._id
+  //       console.log(friendid , userId);
+  //       // Use friendId directly from the component props
+  //       await axios.get(`http://localhost:4345/users/showmessage/${userId}/${friendid}`
+  //       ).then((res)=>{
+  //         console.log(res);
+  //       setmessaging(res.data.messages);
+  //       }).catch((error)=>{
+  //       console.log(error);
+  //     })
+  //   }
+  //   // Call the function to fetch messages
+  //   getMessages();
+  // }, [userId, friendId]); 
   
   
   
@@ -174,6 +201,8 @@ function goback() {
   const capitalizeFirstLetter = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
+
+
 
   return (
     <>
@@ -219,7 +248,16 @@ function goback() {
     </main>
       <section className="mt-5">
          <center className="border-bottom fw-bold h3 border-dark border-2">Your Companion Crew</center>
-        <p className="text-info  bg-dark ">{showFriends.length}  {showFriends.length < 2 ? "Friend": "Friends"}</p>
+         <p className="text-info  bg-dark ">{showFriends.length}  {showFriends.length < 2 ? "Friend": "Friends"}</p>
+          {showFriends&&
+           
+           showFriends.map((el, i)=>(
+            <div className='d-flex align-items-center bg-dark text-light'>
+               <img src={el.profilePic} className='bluh' srcset="" />
+               <p className='mx-2'>{el.email}</p>
+            </div>
+           ))
+          }
         
        {/* <div>
         {disInfo && disInfo.map((el, i)=>(

@@ -18,7 +18,7 @@ import NetworkPage from './Component/NetworkPage';
 import { Provider } from 'react-redux';
 import Store from './Redux/Store';
 import Notification from './Component/Notification';
-import Message from './Component/Message';
+
 
 
 
@@ -36,7 +36,7 @@ root.render(
         <Route path="/dashboard/Network" element={<NetworkPage/>}/> 
         </Route>
         <Route path='/network/:id' element={<NetworkPage/>}/>
-        <Route path='/message/:id' element={<Message/>}/>
+        {/* <Route path='/message/:id' element={<Message/>}/> */}
         <Route path='/notifications' element={<Notification/>}/>
       <Route path='/Button' element={<Button/>}/>
       <Route path="/user" element={<User/>}/>
