@@ -219,10 +219,12 @@ function goback() {
           </div>
           <p>{capitalizeFirstLetter(friendData.email)}</p>
           <p>{friendshipStatus ? 'Friends' : 'Not Friend'}</p>
-          <div className='d-flex p-2 anim'>
+          <div className='d-flex p-2 '>
             <button onClick={addFriend} className='btn btn-info mx-2'>
               {friendshipStatus ? 'Unfriend' : 'Add Friend'}
             </button>
+            <div className='anim'> 
+
             <button className='btn btn-info adolu' onClick={chatroom}>Message</button>
 
             <main className="container col-6">
@@ -242,6 +244,7 @@ function goback() {
         </div>
        </section>
        </main>
+            </div>
           </div>
         </div>
       )}
@@ -258,18 +261,6 @@ function goback() {
             </div>
            ))
           }
-        
-       {/* <div>
-        {disInfo && disInfo.map((el, i)=>(
-          <div key={i} >
-            <img src={} alt="" />
-            
-          </div>
-        ))}
-       </div> */}
-
-      
-      
       </section>
      <ToastContainer />
     </>

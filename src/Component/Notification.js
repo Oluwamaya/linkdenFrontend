@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { RiArrowGoBackLine } from "react-icons/ri";
 
 const Notification = () => {
   const navigate = useNavigate();
@@ -127,20 +128,24 @@ const Notification = () => {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
 
+  function goback(){
+    navigate("/dashboard/Home")
+  }
   return (
     <>
       <main className='container-fluid p-2'>
-        <div className='bg-dark text-light px-2'>
-          <div>
+        <div className='bg-dark text-light px-2 feel'>
+          <div className='d-flex  justify-content-between  align-items-center p-2'>
             <h4>Notifications</h4>
-          </div>
+            <button className='btn btn-light ' onClick={goback}><RiArrowGoBackLine /></button>
+          </div><hr />
           <div>
             {notifications &&
               notifications.map((el, i) => (
                 <div className="border-bottom d-flex justify-content-between align-items-center" key={i}>
                   <p className="fw-bold fs-6">{capitalizeFirstLetter(el.message)}</p>
                   {el.message.includes("sent you a friend request") ? (
-                    <div className="p-2">
+                    <div className="p-2 d-flex align-items-center">
                       <button className="btn btn-success" onClick={() => acceptFriend(el, i)}>
                         Accept
                       </button>
@@ -152,6 +157,13 @@ const Notification = () => {
                 </div>
                )) 
                   }</div>
+
+                  <div className='d-flex align-items-center bg-white text-dark position-fixed bottom-0 end-0 start-0 '>
+                    <img src={require("../image/yellow-note-paper-with-red-pin_1284-42430.avif")} className='maya' alt="" srcset="" />
+                    <p className=' h6 fw-bold w-100 flow'>"Explore Notifications Read Your Messages"</p>
+                        
+
+                  </div>
           </div>
       </main>
       <ToastContainer />

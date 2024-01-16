@@ -134,8 +134,21 @@
 .bammy{
   max-width: 100%;
 }
+ .fem{
+  background-color: rgb(41,52,75) !important;
+  border-bottom: 3px solid pink;
+  box-shadow: 2px 2px 3px gold;
+ }
+ .feel{
+  height: 100vh !important;
+  /* height: inherit !important; */
 
-
+ }
+ .maya{
+  
+  height: 40px;
+   width: 40px;
+ }
 .mko{
   background-image: url(../src/image/chatbg.webp);
   bottom: 1000px !important;

@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { ImFilePicture } from "react-icons/im";
 import { useDispatch, useSelector } from 'react-redux';
+import { RiArrowGoBackLine } from "react-icons/ri";
 
 
 const Chat = () => {
@@ -57,16 +58,24 @@ const Chat = () => {
      function sendText() {
       console.log(inputtext);
      }
-
-
+     function goback(){
+      navigate("/dashboard/Home")
+    }
+     
      const capitalizeFirstLetter = (word) => {
       return word.charAt(0).toUpperCase() + word.slice(1);
     };
   return (
     <>
        <main className='container-fluid  row'> 
+       <div className=' text-end fem'>
+       <button className='btn btn-dark ' onClick={goback}><RiArrowGoBackLine /> Go Back</button>
+       </div>
           <div className='col-12 col-md-4  bg-dark text-light'>
-            <h2>Chats</h2><hr />
+            <div>
+            <h2>Chats</h2>
+           
+             </div>
             {showAllFriend&&
               showAllFriend.map((el,i)=>(
                 <div key={i}> 
@@ -89,7 +98,8 @@ const Chat = () => {
               <h3>{display.username}</h3>
             </div><hr />
             <div>
-              
+              <p className='text-end text-dark bg-light'>maya how far</p>
+              <p className='bg-dark text-light'>my gee i dey </p>
             </div>
             <div className='d-flex align-items-center position-absolute bottom-0 end-0 start-0 bg-white '>
               <p className='mt-1 ms-1'><ImFilePicture /></p>
