@@ -134,10 +134,10 @@ const Notification = () => {
   return (
     <>
       <main className='container-fluid p-2'>
-        <div className='bg-dark text-light px-2 feel'>
+        <div className='slow  text-dark px-2 feel'>
           <div className='d-flex  justify-content-between  align-items-center p-2'>
-            <h4>Notifications</h4>
-            <button className='btn btn-light ' onClick={goback}><RiArrowGoBackLine /></button>
+            <h4 className='fw-bold'>Notifications</h4>
+            <button className='btn btn-dark ' onClick={goback}><RiArrowGoBackLine /></button>
           </div><hr />
           <div>
             {notifications &&
@@ -146,10 +146,10 @@ const Notification = () => {
                   <p className="fw-bold fs-6">{capitalizeFirstLetter(el.message)}</p>
                   {el.message.includes("sent you a friend request") ? (
                     <div className="p-2 d-flex align-items-center">
-                      <button className="btn btn-success" onClick={() => acceptFriend(el, i)}>
+                      <button className="btn btn-light" onClick={() => acceptFriend(el, i)}>
                         Accept
                       </button>
-                      <button className="btn btn-info mx-2" onClick={() => RejectFriend(el, i)}>
+                      <button className="btn btn-dark mx-2" onClick={() => RejectFriend(el, i)}>
                         Reject
                       </button>
                     </div>
@@ -158,11 +158,9 @@ const Notification = () => {
                )) 
                   }</div>
 
-                  <div className='d-flex align-items-center bg-white text-dark position-fixed bottom-0 end-0 start-0 '>
+                  <div className='d-flex align-items-center bg-dark text-light border border-2  rounded-2  border-info position-fixed bottom-0 end-0 start-0 '>
                     <img src={require("../image/yellow-note-paper-with-red-pin_1284-42430.avif")} className='maya' alt="" srcset="" />
-                    <p className=' h6 fw-bold w-100 flow'>"Explore Notifications Read Your Messages"</p>
-                        
-
+                    <p className=' h6 fw-bold w-100 flow moving-text'>"Explore Notifications Read Your Messages"</p>
                   </div>
           </div>
       </main>

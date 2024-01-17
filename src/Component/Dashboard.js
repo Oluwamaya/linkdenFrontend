@@ -130,69 +130,14 @@ const [showmeall, setshowmeall] = useState(false)
   return (
     <>
         
-          <header className='container-fluid' onClick={dntshow}>
-              <main  className='d-flex justify-content-around  align-items-center position-fixed top-0 end-0 start-0  bg-light '>
-                <div className='d-flex align-items-center '>
-                <img src={require("../image/logo.png")} className='log img-fluid ' alt="icon" />
-                <div className='  '> 
-
-                <div onMouseOver={showme} className='few '>
-                  {/* <div onMous></div> */}
-                  <p className='mt-2 text-muted'><FaSearch /></p>
-                  <input type="search" value={searchQuery}  onInput={handleSearchChange} placeholder=" Search " className='search'/>
-                </div>
-               
-                </div>
-                </div>
-                
-
-                <div className='d-flex pt-1 justify-content-between  align-items-center w-75'>
-
-                  <Link to={'/Dashboard/Home'} className=' d-flex align-items-center flex-column text-decoration-none color lin '>
-                  <AiFillHome/>
-                  Home
-                  </ Link>
-                  <Link to={'/dashboard/Network'} className='d-flex align-items-center flex-column text-decoration-none color lin '>
-                  <FaPeopleRobbery/>
-                  My Network
-                  </Link>
-                
-
-                  <Link to={'/chats'} className='d-flex align-items-center flex-column text-decoration-none color lin '>
-                  <BiSolidMessageRoundedDots/>
-                  Messaging
-                  </Link>
-                  <Link to={'/notifications'} className='d-flex align-items-center flex-column text-decoration-none  lin '><IoMdNotifications/>
-                  Notification
-                  </Link>
-                  <Link to={'/user'}>
-                  <p className='text-black bg-secondary rounded-circle text-light p-2 h5 fw-bolder'>{message && message.username[0].toUpperCase()}</p>
-                  </Link>
-                  
-                </div>
-                
-              </main>
-              {showmeall && <div className=' border text-light position-fixed   bg-dark py-2'>
-                  <div >
-                    <ul>
-                      <div className='d-flex align-items-center '>
-
-                      <h5>Recent search</h5>
-                      {/* <button className='rounded-circle py-1 px-2 mx-2  border-0'  onClick={dntshow}>X</button> */}
-                      </div>
-        {Array.isArray(searchResults) &&
-        added.map((userInfo) => (
-          <div key={userInfo._id}>
-
-          <li onClick={() => networkPage({ user: userInfo })}>{capitalizeFirstLetter(userInfo.username)}</li>
-        
-          </div>
-        ))}
-        </ul>
-        </div>
-                </div>}
-          </header>
-                  <Outlet/>
+          <main className=' frok bg-danger w-100'>    
+            <nav> 
+              
+              
+            
+            </nav>
+              <Outlet/>
+          </main>
                   <ToastContainer />        
     </>
   )

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ImFilePicture } from "react-icons/im";
 import { useDispatch, useSelector } from 'react-redux';
 import { RiArrowGoBackLine } from "react-icons/ri";
+import { IoChatbubblesOutline } from "react-icons/io5";
 
 
 const Chat = () => {
@@ -67,18 +68,22 @@ const Chat = () => {
     };
   return (
     <>
-       <main className='container-fluid  row'> 
-       <div className=' text-end fem'>
+       <main className='container-fluid  row  '>
+        
+          
+          
+       <div className=' text-end  fem'>
        <button className='btn btn-dark ' onClick={goback}><RiArrowGoBackLine /> Go Back</button>
        </div>
-          <div className='col-12 col-md-4  bg-dark text-light'>
-            <div>
-            <h2>Chats</h2>
+  
+          <div className='col-12 col-md-4 faap bg-dark'>
+            <div className=''>
+            <h2  className='flmk'><IoChatbubblesOutline /> Chats</h2>
            
              </div>
             {showAllFriend&&
               showAllFriend.map((el,i)=>(
-                <div key={i}> 
+                <div className=' bg-danger' key={i}> 
                   <div onClick={()=> pressme(el,i)} className='d-flex bg-white text-dark align-items-center rounded  border my-1 p-1'>
                   <img src={el.profilePic} className='bluh' alt="" srcset="" />
                   <p className='mx-2 mt-3'>{capitalizeFirstLetter(el.username)} </p>
@@ -113,7 +118,9 @@ const Chat = () => {
                   <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis sed, non perspiciatis omnis, dolore ut illum repudiandae, quisquam error quidem necessitatibus reprehenderit ipsum quam enim asperiores illo! Harum, illo doloribus.</p>
               </div>
             }
-          </div>
+            </div>
+          
+          
         </main>  
     </> 
   )

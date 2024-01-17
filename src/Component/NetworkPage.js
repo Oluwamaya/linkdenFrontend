@@ -8,6 +8,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoSend } from "react-icons/io5";
 import { FaLongArrowAltLeft } from "react-icons/fa";
+import { VscDebugDisconnect } from "react-icons/vsc";
+import { FaPeoplePulling } from "react-icons/fa6";
+import { IoChatbubblesOutline } from "react-icons/io5";
+
 
 
 const NetworkPage = () => {
@@ -202,35 +206,44 @@ function goback() {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
 
-
+  ;
 
   return (
     <>
-    <main className='container'>
+    <section className='container-fluid  blink'>
+      
+    <main >
       <div>
-        <button className='btn btn-success rounded-3 ' onClick={goback}><FaLongArrowAltLeft /></button>
+        {/* <button className='btn btn-dark rounded-3 ' ><FaLongArrowAltLeft /></button> */}
+        <button onClick={goback} className="Btn">
+        <FaLongArrowAltLeft />
+<p className="text">Back</p>
+</button>
+
       </div>
       {friendData && (
-        <div className='col-8 mx-auto my-1 rounded-2 border bg-dark text-light d-flex justify-content-center align-items-center flex-column'>
-          <h6>User Info</h6>
-          <div className='d-flex align-items-center justify-content'>
-            <p className='h4 me-2'>{capitalizeFirstLetter(friendData.username)}</p>
-            <img src={friendData.profilePic} alt='' className='img-fluid bluh' />
-          </div>
-          <p>{capitalizeFirstLetter(friendData.email)}</p>
-          <p>{friendshipStatus ? 'Friends' : 'Not Friend'}</p>
-          <div className='d-flex p-2 '>
-            <button onClick={addFriend} className='btn btn-info mx-2'>
-              {friendshipStatus ? 'Unfriend' : 'Add Friend'}
+        <div className='col-md-6  col-sm-10  mx-auto p-2 my-1 rounded-2 border bent d-flex justify-content-center align-items-center flex-column'>
+            <section className='d-flex align-items-center justify-content-between w-100 my-4'>
+              <main>
+              <button onClick={addFriend} className='stem '>
+              {friendshipStatus ?(<p><VscDebugDisconnect /> disconnect</p>): ( <p><FaPeoplePulling /> Connect</p> ) }
             </button>
+              </main>
+              <div className='d-flex justify-content-center'>
+              {/* <img  src={frienddetails.profilePic} className='bluh mx-2' alt="" srcset="" /> */}
+              <img src={friendData.profilePic} alt='' className='img-fluid vlop ' />
+              </div>
+              <main>
+              <div className='d-flex '>
+           
             <div className='anim'> 
 
-            <button className='btn btn-info adolu' onClick={chatroom}>Message</button>
+            <button className='stem' onClick={chatroom}><IoChatbubblesOutline /> Message</button>
 
             <main className="container col-6">
        <section className='mko  rounded-2 p-2'>
         <div className='d-flex align-items-center '>
-          <img  src={frienddetails.profilePic} className='bluh mx-2' alt="" srcset="" />
+         
           <h3>{frienddetails.username}</h3>
         </div>
         <div className>
@@ -246,12 +259,24 @@ function goback() {
        </main>
             </div>
           </div>
+              </main>
+              </section>        
+          
+          <div className='m-auto kolt'>
+            <center className='h4 me-2'>{capitalizeFirstLetter(friendData.username)}</center>
+          <p>{capitalizeFirstLetter(friendData.email)}</p>
+            <center>web Producer-web Specialist</center>
+            <center>Columbia University-New York</center>
+           
+          <center className="text-light  bg-dark py-2 rounded my-2">{showFriends.length}  {showFriends.length < 2 ? "Friend": "Friends"}</center>
+          </div>
+          
         </div>
       )}
     </main>
-      <section className="mt-5">
+      <section className="mt-5 fens">
          <center className="border-bottom fw-bold h3 border-dark border-2">Your Companion Crew</center>
-         <p className="text-info  bg-dark ">{showFriends.length}  {showFriends.length < 2 ? "Friend": "Friends"}</p>
+         <p >Friends List</p>
           {showFriends&&
            
            showFriends.map((el, i)=>(
@@ -262,6 +287,8 @@ function goback() {
            ))
           }
       </section>
+      
+    </section>
      <ToastContainer />
     </>
   );

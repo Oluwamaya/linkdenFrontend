@@ -18,7 +18,9 @@ import NetworkPage from './Component/NetworkPage';
 import { Provider } from 'react-redux';
 import Store from './Redux/Store';
 import Notification from './Component/Notification';
-
+import Review from './Component/Review';
+import 'bootstrap/dist/js/bootstrap.bundle.min'
+import "bootstrap/dist/css/bootstrap.min.css";
 
 
 
@@ -42,7 +44,7 @@ root.render(
       <Route path="/user" element={<User/>}/>
       <Route path='/forgotpass' element={<ForgotPass/>}/>
       <Route path='/chats' element={<Chat/>}/>
-      
+      <Route path='/YourReview' element={<Review/>}/>     
     </Routes>
     </BrowserRouter>   
     </Provider>

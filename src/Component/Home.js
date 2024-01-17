@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import {AiFillStar ,AiOutlineStar} from 'react-icons/ai'
-import {
-  BsFillImageFill,
-  BsHandThumbsUp,
-  BsStar,
-  BsStarFill,
-  BsStarHalf,
-} from "react-icons/bs";
+import { FaRegComment } from "react-icons/fa";
+import {  BsFillImageFill,BsHandThumbsUp,BsStar,BsStarFill,BsStarHalf,} from "react-icons/bs";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BiCalendar } from "react-icons/bi";
@@ -18,9 +12,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { CgLoadbar } from "react-icons/cg";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import { FcLike } from "react-icons/fc";
+import { GiSelfLove } from "react-icons/gi";
+import "../App.css";
+
 
 const Home = () => {
   const navigate = useNavigate();
+  const [hideComment, sethideComment] = useState(false)
   const [isLiked, setisLiked] = useState(false);
   const [like, setlike] = useState([]);
   const [comments, setcomments] = useState();
@@ -271,10 +272,18 @@ toast(error.response.data.error)
   const capitalizeFirstLetter = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
-
+  const visible = ()=>{
+    
+    sethideComment(!hideComment)
+  }
+  const bammy = ()=>{
+    if (sethideComment === true){
+      sethideComment(false)
+    }
+  }
   return (
     <>
-      <section className="d-flex justify-content-around bammmy  text-light mt-5 border ">
+      <section onClick={bammy} className="d-flex justify-content-around bammy  text-light mt-5  ">
         {/* <main className="col-3 bg-danger hom">
           <div>
             <p className="may">
@@ -286,50 +295,23 @@ toast(error.response.data.error)
             </p>
           </div>
         </main> */}
-        <section className=" mx-4 mt-2 bg-black col-11 col-md-10 " >
-          <main className="bg-dark text-light py-3 me-2 rounded">
-            <div className="d-flex align-items-center  px-2  ">
-              <img
-                src={showInfo && showInfo.profilePic}
-                className="bluh img-fluid "
-                alt=""
-                srcset=""
-              />
+        <main className="w-100 d-flex justify-content-center opa">
+        <section className="   col-sm-12 col-md-10 " >
+          <main className=" ">
+            
+            {/* <button  className="golu btn btn-light"> + </button> */}
+          <button className="golu c-button"data-bs-toggle="modal"
+                data-bs-target="#exampleModal" >
+  <span className="c-main">
+    <span className="c-ico"><span className="c-blur"></span> <span className="ico-text">+</span></span>
+    Post
+  </span>
+</button>
 
-              <button
-                type="button"
-                className=" border-0 w-100 rounded-4 mx-4 p-2 text-start"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
-                start a post
-              </button>
-            </div>
-            <div className="d-flex justify-content-around">
-              <div className="d-flex  align-items-center">
-                <p>
-                  {" "}
-                  <BsFillImageFill />{" "}
-                </p>
-                <p className="ms-2">media </p>
-              </div>
-              <div className="d-flex  align-items-center">
-                <p>
-                  <BiCalendar />
-                </p>
-                <p className="ms-2">Event</p>
-              </div>
-              <div className="d-flex  align-items-center">
-                <p>
-                  <PiArticleMediumDuotone />
-                </p>
-                <p className="ms-2">Write</p>
-              </div>
-            </div>
           </main>
           <center>
             {hidepost && 
-            <div  className="mt-5 fence border rounded-3">
+            <div  className="mt-5 fence  rounded-3">
               <p className="  flot"><PiCamera/></p>
             
             <h4 className="fw-bolder h3  ">{noPost}</h4>
@@ -348,7 +330,7 @@ toast(error.response.data.error)
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
                       "Post and Connect!"
                     </h1>
                     <button
@@ -402,8 +384,9 @@ toast(error.response.data.error)
             {display &&
               display.map((el, i) => (
                 <div   key={i}>
-                  <main className="border border-bg-success my-3 p-2">
-                    <div className="d-flex justify-content-between align-items-center">
+                  <main className=" my-3 p-2  text-">
+                    <div>
+                    <div className="d-flex  justify-content-between align-items-center">
 
                     <div className="d-flex align-items-center p-2 ">
                       <img src={el.author.profilePic} className="bluh img-fluid " alt="" srcset="" />
@@ -412,12 +395,19 @@ toast(error.response.data.error)
                     <div className="position-relative drop bg-bg-transparent " >
                    <button className="dots "><PiDotsThreeCircleVerticalThin /></button>
                     <div className="position-absolute down d-none">
-                  <button className=" btn btn-warning " onClick={()=>delPost(el, i)}>del</button>
-                  {/* <button className="btn btn-success">edit</button> */}
+                  {/* <button className=" btn btn-warning " >del</button> */}
                   
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-  edit
-  </button>
+                  <button onClick={()=>delPost(el, i)} class="delete-button">
+  <svg class="delete-svgIcon" viewBox="0 0 448 512">
+                    <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
+                  </svg>
+</button>
+
+  <button data-bs-toggle="modal" data-bs-target="#exampleModal1" class="edit-button">
+  <svg class="edit-svgIcon" viewBox="0 0 512 512">
+                    <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+                  </svg>
+</button>
   </div>
                     </div>
 
@@ -444,27 +434,30 @@ toast(error.response.data.error)
                     
                     </div>
 
-                    <div>
-                      <p className="fs-6  fw-bold ">{capitalizeFirstLetter(el.caption)}</p>
+                    <div className="text-center">
+                      <div className="mango text-start">
+                      <p className="fs-6  fw-bold  ">{capitalizeFirstLetter(el.caption)}</p>
+                      </div>
                       <img
                         src={el.image}
-                        className="news img-fluid"
+                        className="news img-fluid "
+
                         alt=""
                         srcset=""
                       />
                     </div>
 
-                    <div className="">
+                    <div className="mango ">
                       
                       <p>{el.likes?   el.likes.length : 0} Likes</p>
                       <button
                         onClick={() => handleLikeButton(i, el)}
-                        className="btn btn-primary mx-2"
+                        className="btn border bg-transparent text-light mx-2 "
                       >
-                        {toggle[el._id]}
+                        {toggle[el._id] === "Unlike"? <FcLike />: <GiSelfLove/>}
                       </button>
 
-                      <button onClick={()=> handleComment(el._id, i)} className="btn btn-primary">Comment</button>
+                      <button onClick={()=> handleComment(el._id, i)} className="btn border bg-transparent"><FaRegComment  className="text-light"/></button>
                       {showComment[i] && (
 
                       <div className="d-flex " key={i}> 
@@ -473,28 +466,43 @@ toast(error.response.data.error)
                       </div>
                       
                       )}
-                      <div>
-
-                        <p>{el.comments ? el.comments.length : "" } comments</p>
+                        <p className="" onClick={visible}>{el.comments ? el.comments.length : "" } comments</p>
+                     {hideComment&&
+                      <div className="bg-secondary  mt-3 wor">
+                        <center><CgLoadbar  className="line"/></center>
+                        <div className="d-flex  align-align-items-center  justify-content-between ">
+                          <center className="fw-bold px-2">Comments</center>
+                          <p className=" fs-4"><IoInformationCircleOutline /></p>
+                        </div>
                         {
                            el.comments.map((com, i)=>(
-                            <div key={i} className="text-light bg-dark border-bottom p-2">
+                            <div  key={i} className=" p-2 text-dark">
+                              
+                            <div className="text-light bg-dark  border-bottom p-1">
+                              <div className="d-flex justify-content-between  align-items-center">
                               <div className="d-flex align-items-center ">
                               <img src={com.userId.profilePic} className="bluk img-fluid me-2" alt="" srcset="" />
                               <h6>{capitalizeFirstLetter(com.userId.username)}</h6>
                               </div>
-                              <p>{com.comment}</p>
-                              <button onClick={(e)=>delComment(com, i)} className="btn btn-danger">X</button>
+                             <div>
+                             <button onClick={(e)=>delComment(com, i)} className="btn btn-light fs-6">X</button>
+                             </div>
+                              </div>
+                              
+                              <p className="mx-5 lead">{capitalizeFirstLetter(com.comment)}</p>
+                            </div>
                             </div>
                            ))
                         }
-                      </div>
+                      </div>}
                     </div>
-                  </main><hr />
+                </div> 
+                 </main><hr />
                 </div>
               ))}
           </main>
         </section>
+        </main>
       </section>
       <ToastContainer />
     </>
