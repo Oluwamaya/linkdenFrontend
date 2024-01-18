@@ -38,6 +38,7 @@ const Home = () => {
  const [postIdForComment, setPostIdForComment] = useState(null);
  const [editcaption, seteditcaption] = useState("")
  const [hidepost, sethidepost] = useState(false)
+ const [lock, setlock] = useState(true)
 
   const token = localStorage.getItem("Ln Token");
   
@@ -133,10 +134,23 @@ const Home = () => {
       .then((res) => {
         console.log(res.data);
         toast("Post successful")
+        
+        setlock(false)
+
       })
       .catch((error) => {
         console.log(error);
-        toast(error.response.data);
+        toast.error(error.response.data, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: "Bounce",
+          });
       });
   };
   let result2
@@ -153,6 +167,7 @@ const Home = () => {
    };
    }
   function editPost(el, i) {
+    console.log(i);
     console.log(el)
     const value =  {
       postId: el._id, 
@@ -160,10 +175,11 @@ const Home = () => {
       image: editPic,
       userId: showInfo._id
     }
+    console.log(value);
     axios.post("http://localhost:4345/users/editPost", value)
     .then((res)=>{
    console.log(res)     
-    
+   setlock(false)
     }).catch(error =>{
 console.log(error)
 toast(error.response.data.error)
@@ -180,6 +196,17 @@ toast(error.response.data.error)
     axios.post("http://localhost:4345/users/delpost", value)
     .then((res)=>{
       console.log(res)
+      toast.success(res.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        // transition: "Bounce",
+        });
     }).catch((error)=>{
       console.log(error)
       toast(error.response.data.error)
@@ -284,17 +311,6 @@ toast(error.response.data.error)
   return (
     <>
       <section onClick={bammy} className="d-flex justify-content-around bammy  text-light mt-5  ">
-        {/* <main className="col-3 bg-danger hom">
-          <div>
-            <p className="may">
-              {" "}
-              <BsStarFill />
-              <BsStarHalf />
-              <BsStar />
-              <BsStar />
-            </p>
-          </div>
-        </main> */}
         <main className="w-100 d-flex justify-content-center opa">
         <section className="   col-sm-12 col-md-10 " >
           <main className=" ">
@@ -320,6 +336,7 @@ toast(error.response.data.error)
             {/* <!-- Button trigger modal --> */}
 
             {/* <!-- Modal --> */}
+            {lock &&
             <div
               class="modal fade"
               id="exampleModal"
@@ -346,6 +363,8 @@ toast(error.response.data.error)
                         type="text"
                         onChange={(e) => setcaption(e.target.value)}
                         name="caption"
+                        className="my-2 form-control"
+                        placeholder="Input Your Caption Here..."
                       />
                     </div>
 
@@ -370,6 +389,7 @@ toast(error.response.data.error)
                     <button
                       type="submit"
                       onClick={handleSubmit}
+                      // data-bs-dismiss="modal"
                       class="btn btn-primary"
                     >
                       Post
@@ -378,6 +398,7 @@ toast(error.response.data.error)
                 </div>
               </div>
             </div>
+            }
           </main>
 
           <main className="reverse ">
@@ -403,7 +424,7 @@ toast(error.response.data.error)
                   </svg>
 </button>
 
-  <button data-bs-toggle="modal" data-bs-target="#exampleModal1" class="edit-button">
+  <button data-bs-toggle="modal" data-bs-target={`#exampleModal${i}`} class="edit-button">
   <svg class="edit-svgIcon" viewBox="0 0 512 512">
                     <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
                   </svg>
@@ -412,12 +433,12 @@ toast(error.response.data.error)
                     </div>
 
 
-
-<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{lock &&
+<div class="modal fade" id={`exampleModal${i}`} tabindex="-1" aria-labelledby={`exampleModalLabel${i}`} aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Your Post😊</h1>
+        <h1 class="modal-title fs-5" id={`exampleModalLabel${i}`}>Edit Your Post😊</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -430,7 +451,7 @@ toast(error.response.data.error)
       </div>
     </div>
   </div>
-</div>
+</div>}
                     
                     </div>
 

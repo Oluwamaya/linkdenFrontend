@@ -1,11 +1,31 @@
 body {
   margin: 0;
   padding: 0;
+  cursor: pointer;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.posi{
+  position: fixed !important;
+  /* padding: 8px !important; */
+  top:-48px !important;
+  right: 0;
+  left: 0;
+  /* background: red !important; */
+}
+.kinl{
+  display: none !important;
+}
+.shad12{
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  box-shadow: 3px 3px 7px 3px rgb(12, 17, 20)
 }
 .frok{
   background-image: url("../src/image/network\ background.avif");
@@ -19,6 +39,7 @@ body {
   
 }
 
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -29,6 +50,38 @@ code {
   width: 100%;
   
 }
+.gengi{
+  border-top: 1px solid black;
+  margin: 10px 0;
+  padding: 10px 0 0 0;
+}
+.drop1{
+  /* background-color: red !important; */
+  
+}
+.down1{
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: whitesmoke;
+  display: none;
+
+}
+.drop1:focus-within .down1{
+  display: block;
+}
+.bgb{
+  background-color: transparent;
+  border: 2px solid rgb(14, 13, 13);
+  padding: 1px;
+/* color: red; */
+}
+.klori{
+  font-size: 30px;
+  background-color: transparent;
+  /* color: red; */
+}
 .few{
   position: relative;
   display: flex;
@@ -38,7 +91,7 @@ code {
   margin-left: 10px;
   border-radius: 20px;
   height: 30px;
-  width: 10%;
+  width: 100%;
   padding: 0 8px;
 }
 .faap{
@@ -46,3 +99,78 @@ code {
   height: 90vh !important;
   color: white;
 }
+.kenno{
+  background-image: url("../src/image/network\ background.avif");
+  margin: 0 20px;
+  /* box-shadow: 2px 2px 7px 2px black !important; */
+}
+@media (max-width:700px) {
+  .kinl{
+    display: flex !important;
+    
+    
+  }
+  .shad12{
+    display: none !important;
+  }
+
+}
+.huh {
+ display: inline-block;
+ border-radius: 20px !important;
+ background-color: #18181b;
+ border: none;
+
+ color: #FFFFFF;
+ text-align: center;
+ font-size: 17px;
+ padding: 16px;
+ width: 130px;
+ transition: all 0.5s;
+ cursor: pointer;
+ margin: 5px;
+}
+
+.huh span {
+ cursor: pointer;
+ display: inline-block;
+ position: relative;
+ transition: 0.5s;
+}
+
+.huh span:after {
+ content: '»';
+ position: absolute;
+ opacity: 0;
+ top: 0;
+ right: -15px;
+ transition: 0.5s;
+}
+
+.huh:hover span {
+ padding-right: 15px;
+}
+
+.huh:hover span:after {
+ opacity: 1;
+ right: 0;
+}
+.drop2{
+  position: relative !important;
+
+}
+.down2{
+  background-color: whitesmoke;
+  position: absolute !important;
+  width: 100% !important;
+  /* display: none; */
+  transition: all 2s;
+  border-radius: 0 0 10px 10px !important;
+}
+.saes{
+  background-color: whitesmoke !important;
+ 
+}
+/* .drop2:focus-within .down2{
+  display: block;
+} */

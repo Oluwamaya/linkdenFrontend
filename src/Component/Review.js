@@ -73,13 +73,17 @@ const Review = () => {
        }
   return (
     <>
-      <section className='container  bg-dark text-light foki'>
+      <section className='container-fluid kenno pt-5 text-light  foki'>
         <div className='position-fixed end-0 '>
         <button className='btn btn-light  'onClick={goBack}><IoIosArrowRoundBack  className='fs-1'/> </button>
       </div>
       <div>
-  <form onSubmit={formik.handleSubmit} className='form-group border border-1 pt-5 px-2'>
+
+  <form onSubmit={formik.handleSubmit} className='form-group col-12 m-auto py-3 col-md-8 border border-1 pt-5 px-2'>
     <div className="mb-3 ">
+      <div>
+        <p className='text-dark text-center fw-bold h4 border-dark border-bottom border-2'>Contribute to Our Growth – Write a Review</p>
+      </div>
       <label htmlFor="inputText" className="form-label">Name:</label>
       <input type="text" name='name' className={formik.touched.name && formik.errors.name ? 'form-control is-invalid' : 'form-control is-valid'} onChange={formik.handleChange} onBlur={formik.handleBlur} id="inputText"  />
       <p className='text-danger'>{formik.touched.name && formik.errors.name}</p>
@@ -90,7 +94,10 @@ const Review = () => {
       <p className='text-danger'>{formik.touched.textarea && formik.errors.textarea}</p>   
     </div>
     <div className='text-center m-auto my-3'>
-    <button className="mybut" type='submit'> Submit </button>
+    {/* <button className="mybut" type='submit'> Submit </button> */}
+    <button className='huh' type='submit'>
+  <span>Button</span>
+</button>
 </div>
   </form>
   </div>
