@@ -160,7 +160,7 @@ const Notification = () => {
 
                   <div className='d-flex align-items-center bg-dark text-light border border-2  rounded-2  border-info position-fixed bottom-0 end-0 start-0 '>
                     <img src={require("../image/yellow-note-paper-with-red-pin_1284-42430.avif")} className='maya' alt="" srcset="" />
-                    <p className=' h6 fw-bold w-100 flow moving-text'>"Explore Notifications Read Your Messages"</p>
+                    <p className=' h6 fw-bold w-100 flow moving-text'>"Explore Notifications & Read Your Messages"</p>
                   </div>
           </div>
       </main>
