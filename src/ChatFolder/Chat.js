@@ -118,6 +118,46 @@ const Chat = () => {
           console.log(error);
         });
     };
+    const [editing, setEditing] = useState({ isEditing: false, messageId: null });
+    const [editedMessage, setEditedMessage] = useState('');
+  
+    // ... other code
+  
+    const toggleEditing = (messageId) => {
+      setEditing({ isEditing: !editing.isEditing, messageId });
+      setEditedMessage(''); // Clear edited message when toggling editing mode
+    };
+
+
+    const handleEdit = async (el, i) => {
+      
+        // Implement the logic to send a POST request to update the chat message
+        const updatedMessage = {
+          messageId: el._id,
+          content: editedMessage,
+        };
+         console.log(updatedMessage);
+        // Modify the endpoint to your actual server endpoint for updating messages
+         await axios.post("http://localhost:4345/users/updateChatMessage",{updatedMessage})
+          .then((response)=>{
+            console.log(response.data);
+            
+            
+            
+            // Assuming the server successfully updates the message, update the state accordingly
+            const updatedBest = [...best];
+            updatedBest[i].content = editedMessage;
+            setBest(updatedBest);
+            
+            // Toggle off editing mode
+            toggleEditing(null);
+          }).catch((error)=> {
+        console.error("Error updating message:", error);
+        // You may want to handle errors or provide user feedback here
+      })
+    };
+    
+    
      function goback(){
       navigate("/dashboard/Home")
     }
@@ -125,6 +165,10 @@ const Chat = () => {
       setfemo(true)
       setfirs(false)
     }
+    const editchat= (el, i)=> {
+     console.log(el);
+    }
+
      
      const capitalizeFirstLetter = (word) => {
       return word.charAt(0).toUpperCase() + word.slice(1);
@@ -170,20 +214,62 @@ const Chat = () => {
             </div><hr />
             
             <div className="go ">
-                            {best &&
-                              best.map((el, i) => 
-                              el.sender == display._id ? (
-                                <div className=" bg-info vvo rounded rounded-3 my-1" key={i}>
-                                  <p className="p-1 my-1 ">{el.content}</p>
-                                  <p className="timer">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
-                                </div>
-                              ) : (
-                                <div className=" vento rounded rounded-3  bg-primary-subtle my-1 " key={i}>
-                                  <p className=" p-1 my-1">{el.content}</p>
-                                  <p className="timeb">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
-                                </div>
-                              )
-                              )}
+            {best &&
+  best.map((el, i) =>
+    el.sender == display._id ? (
+      <div className="bg-info vvo rounded rounded-3 my-1" key={i}>
+        {editing.isEditing && editing.messageId === el._id ? (
+          <>
+            <input
+              type="text"
+              value={editedMessage} // Add this line to set the initial value
+              onChange={(e) => setEditedMessage(e.target.value)}
+              className="form-control"
+            />
+            <button className='btn btn-primary' onClick={() => handleEdit(el, i)}>
+              Save Edit
+            </button>
+            <button className='btn btn-light' onClick={() => toggleEditing(null)}>
+              Cancel
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="p-1 my-1">{el.content}</p>
+            <p className="timer">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
+            <button className='btn btn-danger' onClick={() => toggleEditing(el._id)}>
+              Edit Chat
+            </button>
+          </>
+        )}
+      </div>
+    ) : (
+      <div className="vento rounded rounded-3 bg-primary-subtle my-1" key={i}>
+        {editing.isEditing && editing.messageId === el._id ? (
+          <>
+            <input
+              type="text"
+              value={editedMessage} // Add this line to set the initial value
+              onChange={(e) => setEditedMessage(e.target.value)}
+              className="form-control"
+            />
+            <button className='btn btn-primary' onClick={() => handleEdit(el, i)}>
+              Save Edit
+            </button>
+            <button className='btn btn-light' onClick={() => toggleEditing(null)}>
+              Cancel
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="p-1 my-1">{el.content}</p>
+            <p className="timeb">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
+          </>
+        )}
+      </div>
+    )
+  )
+}
                           </div>
 
             <div className='d-flex align-items-center position-absolute bottom-0 end-0 start-0 bg-white '>
@@ -243,22 +329,68 @@ const Chat = () => {
  </div>
  </div>
 
-<div className="go ">
-                {best &&
-                  best.map((el, i) => 
-                  el.sender == display._id ? (
-                    <div className=" bg-info vvo rounded rounded-3 my-1" key={i}>
-                      <p className="p-1 my-1 ">{el.content}</p>
-                      <p className="timer">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
-                    </div>
-                  ) : (
-                    <div className=" vento rounded rounded-3  bg-primary-subtle my-1 " key={i}>
-                      <p className=" p-1 my-1">{el.content}</p>
-                      <p className="timeb">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
-                    </div>
-                  )
-                  )}
-              </div>
+    
+
+ <div className="go ">
+ {best &&
+  best.map((el, i) =>
+    el.sender == display._id ? (
+      <div className="bg-info vvo rounded rounded-3 my-1" key={i}>
+        {editing.isEditing && editing.messageId === el._id ? (
+          <>
+            <input
+              type="text"
+              value={editedMessage} // Add this line to set the initial value
+              onChange={(e) => setEditedMessage(e.target.value)}
+              className="form-control"
+            />
+            <button className='btn btn-primary' onClick={() => handleEdit(el, i)}>
+              Save Edit
+            </button>
+            <button className='btn btn-light' onClick={() => toggleEditing(null)}>
+              Cancel
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="p-1 my-1">{el.content}</p>
+            <p className="timer">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
+            <button className='btn btn-danger' onClick={() => toggleEditing(el._id)}>
+              Edit Chat
+            </button>
+          </>
+        )}
+      </div>
+    ) : (
+      <div className="vento rounded rounded-3 bg-primary-subtle my-1" key={i}>
+        {editing.isEditing && editing.messageId === el._id ? (
+          <>
+            <input
+              type="text"
+              value={editedMessage} // Add this line to set the initial value
+              onChange={(e) => setEditedMessage(e.target.value)}
+              className="form-control"
+            />
+            <button className='btn btn-primary' onClick={() => handleEdit(el, i)}>
+              Save Edit
+            </button>
+            <button className='btn btn-light' onClick={() => toggleEditing(null)}>
+              Cancel
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="p-1 my-1">{el.content}</p>
+            <p className="timeb">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
+          </>
+        )}
+      </div>
+    )
+  )
+}
+
+</div>
+
 
 <div className='d-flex align-items-center position-absolute bottom-0 end-0 start-0 bg-white '>
   <p className='mt-1 ms-1'><ImFilePicture /></p>
