@@ -21,6 +21,8 @@ import Notification from './Component/Notification';
 import Review from './Component/Review';
 import 'bootstrap/dist/js/bootstrap.bundle.min'
 import "bootstrap/dist/css/bootstrap.min.css";
+// import ChatComponent from './ChatFolder/Socket';
+import NotFound from './Component/NotFound';
 
 
 
@@ -44,7 +46,9 @@ root.render(
       <Route path="/user" element={<User/>}/>
       <Route path='/forgotpass' element={<ForgotPass/>}/>
       <Route path='/chats' element={<Chat/>}/>
-      <Route path='/YourReview' element={<Review/>}/>     
+      <Route path='/YourReview' element={<Review/>}/> 
+      {/* <Route path='"/socket' element={<ChatComponent/>}/> */}
+      <Route path='/*' element={<NotFound/>}/>    
     </Routes>
     </BrowserRouter>   
     </Provider>

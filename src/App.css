@@ -213,7 +213,7 @@ max-width: 300px;
 }
 .beni{
   background-image: url(../src/image/chatbg.jpg);
-  height: 100vh;
+  height: 90vh;
 }
 .blood{
   width: fit-content;
@@ -649,8 +649,8 @@ button {
     width: 150% !important;
   }
   .news{
-    width: 100%;
-    height: 60vh !important;
+    max-width: 100%;
+    height: auto !important;
  
     border-radius: 30px;  
     /* object-fit: cover; */

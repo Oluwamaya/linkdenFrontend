@@ -15,6 +15,7 @@ import { FaLongArrowAltLeft } from "react-icons/fa";
 import { VscDebugDisconnect } from "react-icons/vsc";
 import { FaPeoplePulling } from "react-icons/fa6";
 import { IoChatbubblesOutline } from "react-icons/io5";
+// import io from "socket.io-client";
 
 const NetworkPage = () => {
   const navigate = useNavigate();
@@ -30,7 +31,6 @@ const NetworkPage = () => {
     (state) => state.findUser
   );
   const oneuser = added.find((el) => el.email === id);
-  
 
   const [friendData, setFriendData] = useState();
   const [friendshipStatus, setFriendshipStatus] = useState(false);
@@ -41,7 +41,8 @@ const NetworkPage = () => {
   const [chat, setchat] = useState("");
   const [frienddetails, setfrienddetails] = useState("");
   const [messages, setMessages] = useState([]);
-  const [best, setBest] = useState([])
+  const [best, setBest] = useState([]);
+  const [hide, sethide] = useState(false)
   useEffect(() => {
     if (oneuser) {
       setFriendData(oneuser);
@@ -151,29 +152,72 @@ const NetworkPage = () => {
         toast(error.response.data.error);
       });
   };
+
+  useEffect(() => {
+    const getmessages = async () => {
+      try {
+        const userId = await disInfo._id;
+        const friendID = await friendId._id;
+         await axios.get(`http://localhost:4345/users/getChatMessages/${userId}/${friendID}`)
+         .then((res)=>{
+          setBest(res.data.messages)
+         }).catch((error)=>{
+          console.log(error)
+         })
+        
+        // Update your state or do something with the fetched data
+      } catch (error) {
+        console.log(error);
+
+    };
+  }
   
+    // Call getmessages initially
+    getmessages();
   
+    // Setup interval to call getmessages every 2 seconds
+    const intervalId = setInterval(() => {
+      getmessages();
+    }, 1000);
+  
+    // Cleanup: Clear the interval when the component is unmounted or when dependency array changes
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [disInfo._id, friendId._id]); // Add dependencies that should trigger a re-fetch
   
 
-  const chatroom = async()=> {
-    // const fetchChatMessages = async () => {
-      try {
-        const userId = disInfo._id;
-        const friendID = friendId._id;
-        console.log(userId,friendID);
+
+  const chatroom = async () => {
+    sethide(true)
+    // try {
+    //   const userId = disInfo._id;
+    //   const friendID = friendId._id;
+    //   console.log(userId, friendID);
+
+    //   await axios
+    //     .get(
+    //       `http://localhost:4345/users/getChatMessages/${userId}/${friendID}`
+    //     )
+    //     .then((res) => {
+    //       console.log(res);
         
-        await axios.get(`http://localhost:4345/users/getChatMessages/${userId}/${friendID}`)
-        .then((res)=>{
-          console.log(res);
-          setBest(res.data.messages)
-        }).catch((error)=>{
-          console.log(error);
-        })
-      } catch (error) {
-        console.error('Error fetching chat messages', error);
-      }
-    };
-  
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // } catch (error) {
+    //   console.error("Error fetching chat messages", error);
+    // }
+  };
+
+  useEffect(() => {
+   const chatInput = document.getElementById("chatInput")
+    if (chatInput) {
+      chatInput.value = chat;
+    }
+  }, [chat]);
+
 
   const sendText = () => {
     const value = {
@@ -183,12 +227,12 @@ const NetworkPage = () => {
       messageType: "",
     };
     console.log(value);
+    // socket.emit("message", value);
     axios
       .post("http://localhost:4345/users/BestPost", { value })
       .then((res) => {
         console.log(res);
-        setMessages(res.data.chat.messages)
-        console.log(res.data.chat.messages);
+        setchat("")
       })
       .catch((error) => {
         console.log(error);
@@ -198,7 +242,9 @@ const NetworkPage = () => {
   function goback() {
     navigate("/dashboard/Home");
   }
-
+  const closeit = ()=>{
+    sethide(false)
+  }
   const capitalizeFirstLetter = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
@@ -239,61 +285,13 @@ const NetworkPage = () => {
                 </div>
                 <main>
                   <div className="d-flex ">
-                    <div className="anim">
                       <button className="stem" onClick={chatroom}>
                         <IoChatbubblesOutline /> Message
                       </button>
-
-                      <main className="container col-6">
-                        <section className="mko  rounded-2 p-2">
-                          <div className="d-flex align-items-center position-relative">
-                            <img src={friendId.profilePic} className="bluh" alt="" srcset="" />
-                            <h3>{friendId && friendId.username}</h3>
-                          </div><hr />
-                          <div className>
-                           {best &&
-                           best.map((el,i)=>{
-                            <div key={i}>
-                               if (el.sender === disInfo._id) {
-                                
-                               }
-                               <p>{el.sender === disInfo._id ? "true" : "false"}</p>
-                            </div>
-                           })
-
-                           }
-                          
-                          </div>
-                          {messages && 
-                          messages.map((el, i)=>(
-                            <div className=""key={i}>
-                              <p>{el.content}</p>
-                            </div>
-                          ))
-
-                          }
-
-                          <div className="d-flex  align-items-center mt-3">
-                            <input
-                              type="text"
-                              placeholder="Input your Text here"
-                              className=" form-control "
-                              onChange={(e) => {
-                                setchat(e.target.value)
-                              }}
-                              id=""
-                            />
-                            <button
-                              onClick={sendText}
-                              className="btn btn-primary mx-2 fs-6"
-                            >
-                              <IoSend />
-                            </button>
-                          </div>
-                        </section>
-                      </main>
-                    </div>
-                  </div>
+                     </div>
+                      
+                    
+                  {/* </div> */}
                 </main>
               </section>
 
@@ -306,8 +304,8 @@ const NetworkPage = () => {
                 <center>Columbia University-New York</center>
 
                 <center className="text-light  bg-dark py-2 rounded my-2">
-                  {showFriends.length}{" "}
-                  {showFriends.length < 2 ? "Friend" : "Friends"}
+                  {friendData.friends.length}{" "}
+                  {friendData.friends.length < 2 ? "Friend" : "Friends"}
                 </center>
               </div>
             </div>
@@ -326,6 +324,61 @@ const NetworkPage = () => {
               </div>
             ))}
         </section>
+        <main className="container col-8 col-md-4 bg-light femo">
+                        {hide && <section className="  rounded-2 p-2">
+                          <div className="d-flex align-items-center justify-content-between ">
+                            <div className="d-flex align-items-center  ">
+
+                            <img
+                              src={friendId.profilePic}
+                              className="bluh"
+                              alt=""
+                              srcset=""
+                              />
+                            <h3 className="px-2">{friendId && friendId.username}</h3>
+                          </div>
+                             <div>
+                              <button onClick={closeit} className="btn btn-close "></button>
+                             </div>
+                              </div>
+                          <hr />
+                          <div className="golf">
+                            {best &&
+                              best.map((el, i) => 
+                              el.sender == disInfo._id ? (
+                                <div className=" bg-info vento rounded rounded-3 my-1" key={i}>
+                                  <p className="p-1 my-1 ">{el.content}</p>
+                                  <p className="timeb">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric'})}</p>
+                                </div>
+                              ) : (
+                                <div className=" vvo rounded rounded-3  bg-primary-subtle my-1 " key={i}>
+                                  <p className=" p-1 my-1">{el.content}</p>
+                                  <p className="timer">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
+                                </div>
+                              )
+                              )}
+                          </div>
+                          
+
+                          <div className="d-flex  align-items-center mt-3">
+                            <input
+                              type="text"
+                              placeholder="Input your Text here"
+                              className=" form-control "
+                              onChange={(e) => {
+                                setchat(e.target.value);
+                              }}
+                              id="chatInput"
+                            />
+                            <button
+                              onClick={sendText}
+                              className="btn btn-primary mx-2 fs-6"
+                            >
+                              <IoSend />
+                            </button>
+                          </div>
+                        </section>}
+                      </main> 
       </section>
       <ToastContainer />
     </>

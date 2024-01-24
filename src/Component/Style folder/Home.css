@@ -4,8 +4,9 @@
 }
 .log{
     width: 50px;
-    height: 43px;
-    object-fit: cover;
+    height: 5 3px;
+    object-fit: contain;
+    border-radius: 10px;
 }
 .lin{
     color: rgb(102,102,102);

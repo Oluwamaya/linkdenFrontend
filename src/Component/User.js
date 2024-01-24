@@ -9,6 +9,7 @@ const User = () => {
   const navigate = useNavigate()
   const [first, setfirst] = useState(true)
   const [file, setfile] = useState('')
+  const [hide , setHide] = useState(false)
    const token = localStorage.getItem("Ln Token");
   
 
@@ -74,6 +75,13 @@ useEffect(() => {
      const gbemi =()=>{
       navigate("/YourReview")
      }
+     const showhide= ()=>{
+      setHide(true)
+     }
+     const fede =()=>{
+      setHide(false)
+     }
+
      const capitalizeFirstLetter = async (word) => {
       return  word.charAt(0).toUpperCase() + word.slice(1);
     };
@@ -82,41 +90,30 @@ useEffect(() => {
     <main className='mx-auto text-center slow py-2 px-4'> 
     <div className=' d-flex justify-content-between align-items-center my-2'>
     <button className='btn btn-dark 'onClick={goBack}><MdKeyboardBackspace /></button>
-      <button onClick={gbemi} className='sett btn  btn-dark rounded rounded-circle'><IoSettingsOutline className='fs-5' /></button>
+
+    <div className='drop3 position-relative '>
+      <button onClick={showhide} className='sett btn  btn-dark rounded rounded-circle'><IoSettingsOutline className='fs-5' /></button>
+      {hide &&
+        <div className='down3 bg-dark text-light p-2 position-absolute'>
+          <button  onClick={fede} className='btn btn-light p-2 rounded rounded-circle d-flrx my-1 justify-content-end '>X</button>
+        <p className='mt-2' data-bs-toggle="modal"
+                data-bs-target="#exampleModal" >Edit Profile</p>
+        <p onClick={gbemi}>Contact Us</p>
+        <p onClick={LogOut} >LogOut</p>
+      </div>}
+    </div>
 
     </div>
        <div className='col-sm-12  col-md-6  mx-auto rainbo  p-2 '> 
         <img src={first.profilePic} className='blum img-fluid ' alt="photo" />
-       
-           
-         <div className=''>
-         <button
-                type="button"
-                className=" btn btn-secondary my-2 "
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
-                Edit Profile
-              </button>
-         
-         
-         </div>
+         <p className='text-dark h3 fw-bold'> {first.username}</p>
+         <p className='text-dark h3 fw-bold kenni'> {first.email}</p>
 
-
-         <p className='text-light h3 fw-bold'> {first.username}</p>
-         <p className='text-light h3 fw-bold kenni'> {first.email}</p>
+         <center className='fw-bold f6'>{first.friends &&  first.friends.length} Friends</center>
          
          {/* <button className='btn btn-dark' >Logout</button> */}
         
-        <div className='w-100 justify-content-center d-flex'>
-           <button onClick={LogOut}  class="Btn ">
-<div className="sign ms-3"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
-  
-  {/* <div className="text"><b>Logout</b></div> */}
-  <b className=' px-2  '>LogOut</b>
-</button>
-
-          </div>
+       
 
 
         
@@ -179,6 +176,7 @@ useEffect(() => {
               </div>
             </div>
           </main>
+          
     </>
   )
 }

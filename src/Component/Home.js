@@ -32,6 +32,7 @@ const Home = () => {
   const [display, setdisplay] = useState([]);
   const [showInfo, setshowInfo] = useState({})
   const [showComment, setshowComment] = useState(Array(showInfo.length).fill(false));
+  const [isCommentInputVisible, setCommentInputVisible] = useState(false);
   const [toggle, setToggle] = useState({});
   const [idpost, setidpost] = useState()
  const [delcom, setdelcom] = useState("")
@@ -39,6 +40,7 @@ const Home = () => {
  const [editcaption, seteditcaption] = useState("")
  const [hidepost, sethidepost] = useState(false)
  const [lock, setlock] = useState(true)
+
 
   const token = localStorage.getItem("Ln Token");
   
@@ -274,6 +276,7 @@ toast(error.response.data.error)
   };
   const handleComment = (postId,i)=>{
     setPostIdForComment(postId);
+    setCommentInputVisible(true);
     setshowComment((inp)=>{
       const selBTN = [...inp];
       selBTN[i] = !selBTN[i]
@@ -282,6 +285,7 @@ toast(error.response.data.error)
     
   }
   function sendComment(postId, i){
+
     console.log(postId)
   
     const value = {
@@ -292,6 +296,7 @@ toast(error.response.data.error)
     console.log(value)
     axios.post("http://localhost:4345/users/getComment",value).then((res)=>{
       console.log(res)
+      setCommentInputVisible(false);
     }).catch((error)=>{
       console.log(error)
     })
@@ -459,13 +464,16 @@ toast(error.response.data.error)
                       <div className="mango text-start">
                       <p className="fs-6  fw-bold  ">{capitalizeFirstLetter(el.caption)}</p>
                       </div>
+                      <div>
+
                       <img
                         src={el.image}
                         className="news img-fluid "
-
+                        
                         alt=""
                         srcset=""
-                      />
+                        />
+                        </div>
                     </div>
 
                     <div className="mango ">
@@ -481,9 +489,26 @@ toast(error.response.data.error)
                       <button onClick={()=> handleComment(el._id, i)} className="btn border bg-transparent"><FaRegComment  className="text-light"/></button>
                       {showComment[i] && (
 
-                      <div className="d-flex " key={i}> 
-                        <input className="form-control mx-3" type="text" onChange={(e)=>{setcomments(e.target.value)}}/>
-                        <button className="btn btn-dark" onClick={()=>sendComment(el, i)}>send</button> 
+                      <div className="d-flex bg-light-subtle p-2  " key={i}> 
+                       
+                      {isCommentInputVisible && (
+                        <>
+                          <input
+                          placeholder="Add a comment..."
+                            className="form-control mx-3"
+                            type="text"
+                            onChange={(e) => {
+                              setcomments(e.target.value);
+                            }}
+                          />
+                          <button
+                            className="btn btn-dark"
+                            onClick={() => sendComment(el._id, i)}
+                          >
+                            send
+                          </button>
+                        </>
+                      )}
                       </div>
                       
                       )}

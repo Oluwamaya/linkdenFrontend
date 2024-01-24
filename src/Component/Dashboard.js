@@ -136,12 +136,14 @@ const Dashboard = () => {
     <>
       <main className=" frok bg-danger w-100">
         <nav className=" align-items-center justify-content-around bg-light shad12">
-          <div className="d-flex ">
+          <div className="d-flex align-items-center">
+            <div>         
             <img
-              src={require("../image/logo.png")}
+              src={require("../image/news.jpg")}
               className="log img-fluid "
               alt="icon"
             />
+            </div>
             <main className="drop2">
               <div className="few ">
                 {/* <div onMous></div> */}
@@ -229,12 +231,14 @@ const Dashboard = () => {
 
         <main className="posi">
           <nav className=" justify-content-between align-items-center bg-light kinl position-relative w-100 p-2 mt-5">
-            <div className="d-flex ">
-              <img
-                src={require("../image/logo.png")}
-                className="log img-fluid "
-                alt="icon"
-              />
+            <div className="d-flex align-items-center">
+            <div>         
+            <img
+              src={require("../image/news.jpg")}
+              className="log img-fluid "
+              alt="icon"
+            />
+            </div>
               <main className="drop2">
                 <div className="few ">
                   {/* <div onMous></div> */}
