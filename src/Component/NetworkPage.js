@@ -211,6 +211,7 @@ const NetworkPage = () => {
     // }
   };
 
+
   useEffect(() => {
    const chatInput = document.getElementById("chatInput")
     if (chatInput) {
@@ -238,6 +239,42 @@ const NetworkPage = () => {
         console.log(error);
       });
   };
+  const [editing, setEditing] = useState({ isEditing: false, messageId: null });
+  const [editedMessage, setEditedMessage] = useState('');
+
+  const toggleEditing = (messageId) => {
+    setEditing({ isEditing: !editing.isEditing, messageId });
+    setEditedMessage(''); // Clear edited message when toggling editing mode
+  };
+
+
+  const handleEdit = async (el, i) => {
+      
+    // Implement the logic to send a POST request to update the chat message
+    const updatedMessage = {
+      messageId: el._id,
+      content: editedMessage,
+    };
+     console.log(updatedMessage);
+    // Modify the endpoint to your actual server endpoint for updating messages
+     await axios.post("http://localhost:4345/users/updateChatMessage",{updatedMessage})
+      .then((response)=>{
+        console.log(response.data);
+        
+        
+        
+        // Assuming the server successfully updates the message, update the state accordingly
+        const updatedBest = [...best];
+        updatedBest[i].content = editedMessage;
+        setBest(updatedBest);
+        
+        // Toggle off editing mode
+        toggleEditing(null);
+      }).catch((error)=> {
+    console.error("Error updating message:", error);
+    // You may want to handle errors or provide user feedback here
+  })
+};
 
   function goback() {
     navigate("/dashboard/Home");
@@ -343,20 +380,64 @@ const NetworkPage = () => {
                               </div>
                           <hr />
                           <div className="golf">
-                            {best &&
-                              best.map((el, i) => 
-                              el.sender == disInfo._id ? (
-                                <div className=" bg-info vento rounded rounded-3 my-1" key={i}>
-                                  <p className="p-1 my-1 ">{el.content}</p>
-                                  <p className="timeb">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric'})}</p>
-                                </div>
-                              ) : (
-                                <div className=" vvo rounded rounded-3  bg-primary-subtle my-1 " key={i}>
-                                  <p className=" p-1 my-1">{el.content}</p>
-                                  <p className="timer">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
-                                </div>
-                              )
-                              )}
+                          {best &&
+  best.map((el, i) =>
+    el.sender == disInfo._id ? (
+      <div className="bg-info vvo rounded rounded-3 my-1" key={i}>
+        {editing.isEditing && editing.messageId === el._id ? (
+          <>
+            <input
+              type="text"
+              value={editedMessage} // Add this line to set the initial value
+              onChange={(e) => setEditedMessage(e.target.value)}
+              className="form-control"
+            />
+            <button className='btn btn-primary' onClick={() => handleEdit(el, i)}>
+              Save Edit
+            </button>
+            <button  className='btn btn-light'  onClick={() => toggleEditing(null)}>
+              Cancel
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="p-1  my-1">{el.content}</p>
+            <p className="timer">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
+            <button class="edit-button"  onClick={() => toggleEditing(el._id)} >
+  <svg class="edit-svgIcon" viewBox="0 0 512 512">
+                    <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+                  </svg>
+</button>
+          </>
+        )}
+      </div>
+    ) : (
+      <div className="vento rounded rounded-3 bg-primary-subtle my-1" key={i}>
+        {editing.isEditing && editing.messageId === el._id ? (
+          <>
+            <input
+              type="text"
+              value={editedMessage} // Add this line to set the initial value
+              onChange={(e) => setEditedMessage(e.target.value)}
+              className="form-control"
+            />
+            <button className='btn btn-primary' onClick={() => handleEdit(el, i)}>
+              Save Edit
+            </button>
+            <button className='btn btn-light' onClick={() => toggleEditing(null)}>
+              Cancel
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="p-1 my-1">{el.content}</p>
+            <p className="timeb">{new Date(el.timestamp).toLocaleTimeString('en-US', { hour: "numeric", minute: 'numeric' })}</p>
+          </>
+        )}
+      </div>
+    )
+  )
+}
                           </div>
                           
 
