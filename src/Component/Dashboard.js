@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4345/users/verify", {
+      .get("https://lnbackend.onrender.com/users/verify", {
         headers: {
           Authorization: `bearer ${token}`,
         },
@@ -63,7 +63,7 @@ const Dashboard = () => {
     console.log(query);
     try {
       axios
-        .get("http://localhost:4345/users/getUsers", { params: { query } })
+        .get("https://lnbackend.onrender.com/users/getUsers", { params: { query } })
         .then((res) => {
           console.log(res.data);
           setSearchResults(res.data);

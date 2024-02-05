@@ -45,7 +45,7 @@ const Home = () => {
   const token = localStorage.getItem("Ln Token");
   
   useEffect(() => {
-    axios.get("http://localhost:4345/users/verify",{
+    axios.get("https://lnbackend.onrender.com/users/verify",{
       headers:{
         Authorization: `bearer ${token}`
       }
@@ -69,7 +69,7 @@ const Home = () => {
     }, [])
   useEffect(() => {
     axios
-      .get("http://localhost:4345/users/getpost", {
+      .get("https://lnbackend.onrender.com/users/getpost", {
         headers: {
           Authorization: `bearer ${token}`,
         },
@@ -125,7 +125,7 @@ const Home = () => {
     e.preventDefault();
     axios
       .post(
-        "http://localhost:4345/users/posts",
+        "https://lnbackend.onrender.com/users/posts",
         { file, caption },
         {
           headers: {
@@ -178,7 +178,7 @@ const Home = () => {
       userId: showInfo._id
     }
     console.log(value);
-    axios.post("http://localhost:4345/users/editPost", value)
+    axios.post("https://lnbackend.onrender.com/users/editPost", value)
     .then((res)=>{
    console.log(res)     
    setlock(false)
@@ -195,7 +195,7 @@ toast(error.response.data.error)
        postId : el._id,
        userId: showInfo._id 
     }
-    axios.post("http://localhost:4345/users/delpost", value)
+    axios.post("https://lnbackend.onrender.com/users/delpost", value)
     .then((res)=>{
       console.log(res)
       toast.success(res.data.message, {
@@ -219,7 +219,7 @@ toast(error.response.data.error)
     console.log(com._id)
    setdelcom(com._id)
    console.log(delcom)
-   axios.post("http://localhost:4345/users/delcomment", {delcom})
+   axios.post("https://lnbackend.onrender.com/users/delcomment", {delcom})
    .then((res)=>{
     console.log(res)
     toast(res.data.message)
@@ -262,7 +262,7 @@ toast(error.response.data.error)
 
     if (value) {
       axios
-        .post("http://localhost:4345/users/getLike", value)
+        .post("https://lnbackend.onrender.com/users/getLike", value)
         .then((req) => {
           console.log(req);
         })
@@ -294,7 +294,7 @@ toast(error.response.data.error)
       comments
     };
     console.log(value)
-    axios.post("http://localhost:4345/users/getComment",value).then((res)=>{
+    axios.post("https://lnbackend.onrender.com/users/getComment",value).then((res)=>{
       console.log(res)
       setCommentInputVisible(false);
     }).catch((error)=>{
