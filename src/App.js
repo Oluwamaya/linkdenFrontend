@@ -40,7 +40,7 @@ const App = () => {
         console.log(value);
       if (value) {
         await axios
-          .post("http://localhost:4345/users/signup", value)
+          .post("https://lnbackend.onrender.com/users/signup", value)
           .then((res) => {
             console.log(res.data.message);
             toast(res.data.message)
