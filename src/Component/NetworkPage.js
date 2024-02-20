@@ -20,9 +20,9 @@ import { IoChatbubblesOutline } from "react-icons/io5";
 const NetworkPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isfetching, allFriend, isfetchingError } = useSelector(
-    (state) => state.FriendSlice
-  );
+
+  // const { isfetching, allFriend, isfetchingError } = useSelector(
+  //   (state) => state.FriendSlice);
   // console.log(allFriend);
 
   const { id } = useParams();
@@ -84,11 +84,11 @@ const NetworkPage = () => {
       });
   }, []);
 
-  function getallFriends() {
+  const  getallFriends = async ()=> {
     const identity = disInfo._id;
     console.log(identity);
 
-    axios
+  await  axios
       .post("http://localhost:4345/users/fetch", { identity })
       .then((res) => {
         // console.log(res);

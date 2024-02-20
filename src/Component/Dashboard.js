@@ -12,10 +12,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import _debounce from "lodash/debounce";
 import { fetchingfriends, fetchedFriends, fetchingError } from "../Redux/Slice";
+import { isFetchingUser, fetchedUser } from "../Redux/Userslice";
 import { useDispatch, useSelector } from "react-redux";
 import { FaBars } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
+
 
 const Dashboard = () => {
   const { isAdding, added, addingError } = useSelector(
@@ -39,6 +41,7 @@ const Dashboard = () => {
       })
       .then((res) => {
         // console.log(res.data.message)
+        dispatch(fetchedUser(res.data.user))
         setmessage(res.data.user);
         // console.log(res.data.user)
       })
@@ -349,9 +352,9 @@ const Dashboard = () => {
             </main>
           </nav>
         </main>
-        <div>
+        {/* <div>
           <p>lor</p>
-        </div>
+        </div> */}
       
         <Outlet />
       </main>
