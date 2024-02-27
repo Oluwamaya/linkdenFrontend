@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "dev": "@babel/plugin-proposal-private-property-in-object",
     "web-vitals": "^3.5.0"
   }
