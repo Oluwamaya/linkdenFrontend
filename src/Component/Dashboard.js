@@ -166,10 +166,10 @@ const Dashboard = () => {
               </div>
               <div className="down2">
                 {showmeall &&
-                  <div className=" text-dark  saes py-2 ms-2">
+                  <div className=" text-dark  saes py-2 ms-2 f">
                     <div>
                       <ul>
-                        <div className="d-flex align-items-center ">
+                        <div className="d-flex align-items-center fl">
                           <h5 className="fw-bold">Recent search</h5>
                           {/* <button className='rounded-circle py-1 px-2 mx-2  border-0'  onClick={dntshow}>X</button> */}
                         </div>
