@@ -21,7 +21,6 @@ const Chat = () => {
   const [socket, setSocket] = useState(null);
   const [first, setFirst] = useState(true);
   const [secondd, setsecondd] = useState(false);
-
   const [third, setThird] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
@@ -29,6 +28,7 @@ const Chat = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingMessageId, setEditingMessageId] = useState(null);
   const [editedText, setEditedText] = useState('');
+  const [dummyState, setDummyState] = useState(false);
 
 
 
@@ -80,9 +80,10 @@ const Chat = () => {
    
     // Event listener for receiving messages
     newSocket.on('receiveMessage', async (message) => {
-      console.log(message.content);
-      console.log(message.content)
+      console.log(message)
      await setMessages((prevMessages) => [...prevMessages, message]);
+    //  await setMessages((prevMessages) => [...prevMessages, message]);
+     setDummyState(prevState => !prevState); 
     });
 
     newSocket.on('receiveImage', async(message) => {
@@ -90,6 +91,7 @@ const Chat = () => {
         
         console.log(message);
         await  setMessages((prevMessages) => [...prevMessages, message])
+        setDummyState(prevState => !prevState); 
       }else{
         alert("Not message")
       }
@@ -99,10 +101,27 @@ const Chat = () => {
         
         console.log(audiomessage);
         setMessages((prevMessages)=> [...prevMessages, audiomessage])
+        setDummyState(prevState => !prevState); 
       }else{
         console.log("no voiceNote");
       }
     })
+    // Event listener for messageDeleted event
+    newSocket.on('messageDeleted', ({ messageId }) => {
+        // Find the deleted message in the messages array and update its content
+        setMessages((prevMessages) => {
+        return prevMessages.map((message) => {
+          if (message._id === messageId) {
+            return { ...message, content: [{ type: 'text', value: 'Message Deleted' }] };
+          } else {
+            return message;
+          }
+          // setDummyState(prevState => !prevState); 
+        });
+        });
+    });
+
+
     // Event listener for chat history
     newSocket.on('chatHistory',async (history) => {
       console.log(history);
@@ -131,7 +150,9 @@ const Chat = () => {
     }
   };
   const sendImage =()=>{
+    alert('imagesent')
     if (socket && selectedImage !== '') {
+      console.log(selectedImage);
       socket.emit("sendImage",{
         senderId: user._id,
         recipient: currentChatProfile._id,
@@ -157,6 +178,7 @@ const Chat = () => {
     };
     
   };
+  
 
   const handleTyping = () => {
     if (socket) {
@@ -219,7 +241,7 @@ const Chat = () => {
   };
 
   const onData = (recordedData) => {
-    console.log('Recorded audio data:', recordedData);
+    // console.log('Recorded audio data:', recordedData);
     // You can do something with the recorded audio data if needed
   };
 
@@ -265,6 +287,22 @@ const Chat = () => {
     setEditingMessageId(null);
     setEditedText('');
   };
+  
+  // const handleDelete =  (el.id , message)  => {
+  //   //  console.log(el)
+  //   const messageId =  el._id
+  //    const roomId =  el.roomId 
+  //     socket.emit("deleteMessage", ({messageId , roomId})) 
+  // }
+  const handleDelete = async (message) => {
+    console.log(message);
+    const messageId = await message._id;
+    const roomId = await message.room;
+    console.log(messageId);
+    console.log(roomId);
+    socket.emit("deleteMessage", { messageId, roomId });
+  };
+  
   const goBack = () => {
     setFirst(true);
     setsecondd(false)
@@ -344,7 +382,8 @@ const Chat = () => {
                 <button onClick={sendImage}>send</button>
               </center>
             )}
-     {messages && messages.map((message, i) => {
+
+     {messages && messages.length > 0 && messages.map((message, i) => {
   const formattedDate = formatDate(message.timestamp);
   let messageContent = null;
 
@@ -352,17 +391,31 @@ const Chat = () => {
     currentDay = formattedDate;
     messageContent = (
       <div key={i} className='reverse'>
-        <center className='bg-info text-light'><span className="bg-black text-warning" >{1 + i}<IoChatbubblesOutline /></span> {currentDay}</center>
+        <center className='bg-info text-light'> {currentDay}</center>
         <div className='bg-danger text-light'>
-          {message.content.map((el, j) => (
+          { message.content && message.content.map((el, j) => (
             <div key={j}>
               {el.type === 'text' && !el.isEditing && user._id === message.sender && (
+
+
                 <div>
-                  <p>{el.value}</p>
-                  <button onClick={() => handleEdit(el._id, el.value)}>Edit</button>
-                </div>
+                {el.value == 'Message Deleted' ? (
+                <div>
+                
+                  
+                  <p className='border border-1 rounded rounded-3 border-light benk'>{el.value}</p>
+                </div> 
+                  
+                ) : (
+                  <div>
+                    <p>{el.value}</p>
+                    <button className='btn btn-danger' onClick={() => handleEdit(el._id, el.value)}>Edit</button>
+                    <button className='btn btn-dark' onClick={() => handleDelete(message)}>Delete</button>
+                  </div>
+                )}
+              </div>
               )}
-              {el.type === 'text' && el.isEditing && editingMessageId === el._id && (
+              {el.type === 'text' && el.isEditing && editingMessageId === el._id ? (
                 <div className='bg-warning text-primary position-fixed top-50 '>
                   <input
                     type="text"
@@ -373,12 +426,24 @@ const Chat = () => {
                   <button onClick={() => handleSaveEdit(el._id)}>Save</button>
                   <button onClick={handleCancelEdit}>Cancel</button>
                 </div>
-              )}
+              ): (<p>not connected</p>)}
               {el.type === 'image' && (
-                <img src={el.value} className='w-25 rounded rounded-2' alt='Sent Image' />
+                // <img  className='w-25 rounded rounded-2' alt='Sent Image' />
+                <div>
+                <img src={el.value} className='w-25 rounded rounded-2' alt="" /> 
+                {el.value !== 'Message Deleted' && (
+                  <button className='btn btn-dark' onClick={() => handleDelete(message)}>Delete</button>
+                )}
+                </div>
               )}
               {el.type === 'audio' && (
+                <div>
                 <audio controls src={el.value}></audio>
+                {el.value !== 'Message Deleted' && (
+                  <button className='btn btn-dark' onClick={() => handleDelete(message)}>Delete</button>
+                )}
+              </div>
+                
               )}
               {/* Add more conditions for other types if needed */}
             </div>
@@ -392,48 +457,53 @@ const Chat = () => {
       <div key={i}>
         {message.content.map((el, j) => (
           <div key={j}>
-            {/* {el.type === 'text' && !el.isEditing && user._id === message.sender && (
+            {el.type === 'text' && !el.isEditing && user._id === message.sender && (
               <div>
-                <p>{el.value}</p>
-                <button onClick={() => handleEdit(el._id, el.value)}>Edit</button>
-              </div>
+              {el.value == 'Message Deleted' ? (
+              <div>
+              
+                
+                <p className='border border-1 rounded rounded-3 border-light'>{el.value}</p>
+              </div> 
+                
+              ) : (
+                <div>
+                  <p>{el.value}</p>
+                  <button className='btn btn-danger' onClick={() => handleEdit(el._id, el.value)}>Edit</button>
+                  <button className='btn btn-dark' onClick={() => handleDelete(message)}>Delete</button>
+                </div>
+              )}
+            </div>
             )}
             {el.type === 'text' && el.isEditing && editingMessageId === el._id && (
-              <div>
+              <div className='bg-warning text-primary position-fixed top-50 '>
                 <input
                   type="text"
+                  className='form-control'
                   value={editedText}
                   onChange={(e) => setEditedText(e.target.value)}
                 />
                 <button onClick={() => handleSaveEdit(el._id)}>Save</button>
                 <button onClick={handleCancelEdit}>Cancel</button>
               </div>
-            )} */}
-
-{el.type === 'text' && !el.isEditing && user._id === message.sender && (
-  <div>
-    <p>{el.value}</p>
-    <button onClick={() => handleEdit(el._id, el.value)}>Edit</button>
-  </div>
-)}
-{el.type === 'text' && el.isEditing && editingMessageId === el._id && (
-  <div className='bg-warning text-primary position-fixed top-50 '>
-    <input
-      type="text"
-      className='form-control'
-      value={editedText}
-      onChange={(e) => setEditedText(e.target.value)}
-    />
-    <button onClick={() => handleSaveEdit(el._id)}>Save</button>
-    <button onClick={handleCancelEdit}>Cancel</button>
-  </div>
-)}
+            )}
 
             {el.type === 'image' && (
-              <img src={el.value} className='w-25 rounded rounded-2' alt='Sent Image' />
+              // <img src={el.value} className='w-25 rounded rounded-2' alt='Sent Image' />
+              <div>
+              <img src={el.value} className='w-25 rounded rounded-2' alt="" /> 
+              {el.value !== 'Message Deleted' && (
+                <button className='btn btn-dark' onClick={() => handleDelete(message)}>Delete</button>
+              )}
+              </div>
             )}
             {el.type === 'audio' && (
+              <div>
               <audio controls src={el.value}></audio>
+              {el.value !== 'Message Deleted' && (
+                <button className='btn btn-dark' onClick={() => handleDelete(message)}>Delete</button>
+              )}
+            </div>
             )}
             {/* Add more conditions for other types if needed */}
           </div>
@@ -444,6 +514,7 @@ const Chat = () => {
   }
   return messageContent;
 })}
+
 
 
           </div>
