@@ -15,7 +15,7 @@ const Notification = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4345/users/verify", {
+        const response = await axios.get("https://lnbackend.onrender.com/users/verify", {
           headers: {
             Authorization: `bearer ${token}`
           }
@@ -43,7 +43,7 @@ const Notification = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await axios.post("http://localhost:4345/users/findNoti", { email: fetchEmail });
+        const response = await axios.post("https://lnbackend.onrender.com/users/findNoti", { email: fetchEmail });
         setNotifications(response.data.notifications);
         console.log(response);
       } catch (error) {
@@ -74,7 +74,7 @@ const Notification = () => {
        friendemail: el.from,
        notificationId: el._id
    }
-   axios.post("http://localhost:4345/users/acceptFriend", {value}
+   axios.post("https://lnbackend.onrender.com/users/acceptFriend", {value}
    ).then((res)=>{
      console.log(res);
     //  toast(res.data.message)
@@ -113,7 +113,7 @@ const Notification = () => {
         notificationId: el._id
     }
     console.log(value);
-    axios.post("http://localhost:4345/users/rejectFriend", {value}
+    axios.post("https://lnbackend.onrender.com/users/rejectFriend", {value}
     ).then((res)=>{
       console.log(res);
       const updatedNotifications = [...notifications];

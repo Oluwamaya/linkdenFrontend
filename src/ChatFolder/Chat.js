@@ -40,7 +40,7 @@ const Chat = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4345/users/verify", {
+      .get("https://lnbackend.onrender.com/users/verify", {
         headers: {
           Authorization: `bearer ${token}`,
         },
@@ -72,7 +72,7 @@ const Chat = () => {
 
         await axios
           .get(
-            `http://localhost:4345/users/getChatMessages/${userId}/${friendID}`
+            `https://lnbackend.onrender.com/getChatMessages/${userId}/${friendID}`
           )
           .then((res) => {
             if (res.data.messages) {
@@ -119,7 +119,7 @@ const Chat = () => {
     console.log(value);
     // socket.emit("message", value);
     axios
-      .post("http://localhost:4345/users/BestPost", { value })
+      .post("https://lnbackend.onrender.com/users/BestPost", { value })
       .then((res) => {
         console.log(res);
         setinputtext("");
@@ -146,7 +146,7 @@ const Chat = () => {
     console.log(updatedMessage);
     // Modify the endpoint to your actual server endpoint for updating messages
     await axios
-      .post("http://localhost:4345/users/updateChatMessage", { updatedMessage })
+      .post("https://lnbackend.onrender.com/users/updateChatMessage", { updatedMessage })
       .then((response) => {
         // console.log(response.data);
         if (hideEdit) {
@@ -172,7 +172,7 @@ const Chat = () => {
       messageId,
     };
     axios
-      .post("http://localhost:4345/users/delete", { value })
+      .post("https://lnbackend.onrender.com/users/delete", { value })
       .then((res) => {
         if (
           res.status === 200 &&

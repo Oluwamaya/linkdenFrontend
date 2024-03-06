@@ -22,6 +22,7 @@ body {
 .shad12{
   display: flex;
   position: fixed;
+  background-color: white;
   top: 0;
   right: 0;
   left: 0;
@@ -109,7 +110,7 @@ code {
   margin: 0 20px;
   /* box-shadow: 2px 2px 7px 2px black !important; */
 }
-@media (max-width:700px) {
+/* @media (max-width:700px) {
   .kinl{
     display: flex !important;
     
@@ -119,7 +120,7 @@ code {
     display: none !important;
   }
 
-}
+} */
 .huh {
  display: inline-block;
  border-radius: 20px !important;

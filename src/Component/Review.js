@@ -16,7 +16,7 @@ const Review = () => {
     const token = localStorage.getItem("Ln Token")
 
     useEffect(() => {
-        axios.get("http://localhost:4345/users/verify",{
+        axios.get("https://lnbackend.onrender.com/users/verify",{
           headers:{
             Authorization: `bearer ${token}`
           }
@@ -57,7 +57,7 @@ const Review = () => {
             message : textarea 
         }
         console.log(values);
-        await axios.post("http://localhost:4345/users/Review", values
+        await axios.post("https://lnbackend.onrender.com/users/Review", values
         ).then((res)=>{
             console.log(res);
             toast(res.data.message)

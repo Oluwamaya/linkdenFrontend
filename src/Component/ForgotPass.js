@@ -23,7 +23,7 @@ const [flop, setflop] = useState('')
 
 const handlesubmit = ()=>{
     console.log(email)
-    axios.post("http://localhost:4345/users/forgetP", {email})
+    axios.post("https://lnbackend.onrender.com/users/forgetP", {email})
     .then((res) =>{
         console.log(res)
        setsaveOTP(res.data.OTP)
@@ -44,7 +44,7 @@ function handleOTP() {
    if(saveOTP === OTP){
     setsecond(!second)
     setthird(!third)
-    axios.post("http://localhost:4345/users/verifyPass",{OTP, email}).then((res)=>{
+    axios.post("https://lnbackend.onrender.com/users/verifyPass",{OTP, email}).then((res)=>{
         console.log(res)
     }).catch((error)=>{
         console.log(error)
@@ -83,7 +83,7 @@ const formik = useFormik({
         // setpassword(value.password)
         // console.log(password)
        console.log( email,OTP)
-        await  axios.post("http://localhost:4345/users/resetPass",{password,OTP,email})
+        await  axios.post("https://lnbackend.onrender.com/users/resetPass",{password,OTP,email})
             .then((res)=>{
                 console.log(res)
                 alert(res.data.message)
@@ -98,10 +98,10 @@ const formik = useFormik({
     <>
       <main className='container mt-5 ' >
         { first&&
-         <div className='col-8 col-md-4 bg-light border p-2 mx-auto text-center'>
-            <h3 className='my-2 fw-bold lead'>Find your account</h3><hr />
-            <div className='my-2'>
-            <p className='h6'>Please enter your email to search for your account.</p>
+         <div className='mok12 bg-light border p-2 mx-auto text-center'>
+            <h3 className='my-2 fw-bold lead'>Forgot password</h3><hr />
+            <div className='my-2'>  
+            <p className='h6 my-2'>We will send a verification code to this email if it matches an existing account</p>
              <input className='form-control' type="email" placeholder='Email address here' onChange={(e)=>{setemail(e.target.value)}}/>
             </div><hr />
             <div className='text-end px-2'>

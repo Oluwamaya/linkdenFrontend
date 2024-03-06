@@ -189,7 +189,8 @@
 }
 
 .san2{
-  width: 90%;
+  width: 100%;
+  margin-right: 4px;
 }
 .res3{
   width: 9%;
@@ -197,8 +198,7 @@
   cursor: pointer;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  background-color: rgb(243, 236, 236);
-  margin-left: -2px;
+  margin-left: -2px; 
   padding: 2px;
 }
 .brext{
@@ -212,6 +212,9 @@
   margin-top: -3px;
 }
 
+.mok12{
+  width: fit-content;
+}
 
 
 .form {
@@ -225,6 +228,7 @@
   position: relative;
   box-shadow: 2px 2px 5px  blue;
 }
+
 
 
 .title {
@@ -278,6 +282,42 @@
   text-decoration: underline royalblue !important;
 }
 
+.voj3{
+  background: linear-gradient(140deg, rgba(22, 24, 27, 0.852) 0%, rgba(8, 36, 88, 0.879) 100%);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  display: none;
+}
+
+.wof1{
+  width: 27%;
+  /* background-color: rgba(220, 220, 220, 0.212); */
+  height: 90vh;
+  position: sticky;
+  top: 9.7%;
+  right: 3px;
+}
+.shad12{
+  background-color: white;
+  z-index: 1;
+}
+
+.drop2{
+  width: 50%;
+}
+
+.bov4{
+  background-color: rgb(22,24,28);
+  padding: 4px;
+  border-radius: 30px;
+}
+
+.mox6{
+  background-color: transparent;
+}
 .flex {
   display: flex;
   width: 100%;
@@ -321,6 +361,12 @@
   color: green;
 }
 
+
+.bork1{
+  border: 1px solid white;
+  border-radius: 10px;
+  /* width: 70%; */
+}
 .submit {
   border: none;
   outline: none;
@@ -349,6 +395,9 @@
 }
 .bammy{
   max-width: 100%;
+  background-color: black;
+  display: flex;
+  
 
 }
  .slow{
@@ -637,7 +686,8 @@ max-width: 300px;
 .golu{
   position: fixed;
   bottom: 30px;
-  right: 140px;
+  left: 80px;
+  z-index: 1;
 }
 button {
   border: none;
@@ -658,7 +708,7 @@ button {
 .c-button .c-main {
   border-radius: 45px;
   color: rgba(255, 255, 255, 1);
-  padding: 11px 25px 11px 2px;
+  padding: 7px 10px 7px 2px;
   box-shadow: inset 0px 0px 5px rgba(17, 17, 17, 0);
   transition: all 0.5s ease-in-out;
   border: 1px solid transparent;
@@ -675,7 +725,7 @@ button {
 
 .c-ico {
   position: relative;
-  margin-right: 20px;
+  /* margin-right: 20px; */
 }
 
 .c-ico .ico-text {
@@ -685,7 +735,9 @@ button {
   transform: translate(-50%, -50%);
 }
 
-/* Hovering */
+.mano1{
+  margin-top: -4%;
+}
 
 .c-button .c-main:hover {
   box-shadow: inset 0px 0px 5px rgba(17, 17, 17, 0.6);
@@ -707,7 +759,7 @@ button {
 
 .news{
   width: 70%;
-  height: 100vh !important;
+  height: max-content !important;
 
   border-radius: 30px;  
   /* object-fit: cover; */
@@ -845,21 +897,39 @@ button {
   transition-duration: 0.3s;
 }
 
-
+.bg12{
+  margin-top: -1%;
+}
 
 @media (max-width: 700px) {
+  .drop2{
+    width: 75%;
+  }
+  .wof1{
+    display: none;
+  }
+  .voj3{
+    display: block;
+  }
   .kenni{
     font-size: 20px;
   }
   .golu{
     position: fixed;
-    right: 45px;
-    background-color: red;
-    bottom: 40px;
+    left: 70%;
+    right: 10%;
+    /* background-color: red; */
+    bottom: 60px;
   }
   .mango{
-    width:100%;
+    width:70%;
   }
+  .bork1{
+    width: 100% !important;
+  }
+  .bg12{
+  margin-top: 0%;
+}
   
   .kilok{
     width: 150% !important;
@@ -871,4 +941,20 @@ button {
     border-radius: 30px;  
     /* object-fit: cover; */
  }
+}
+@media (max-width:580px) {
+  .golu{
+    position: fixed;
+    left: 65%;
+    right: 10%;
+    bottom: 60px;
+  }
+}
+@media (max-width:455px) {
+  .golu{
+    position: fixed;
+    left: 58%;
+    right: 10%;
+    bottom: 60px;
+  }
 }

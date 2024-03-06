@@ -9,6 +9,12 @@ import { FaRegCommentDots } from "react-icons/fa";
 import "./Style folder/Home.css";
 import "animate.css";
 import axios from "axios";
+import { Link, Outlet } from "react-router-dom";
+import { BiSolidMessageRoundedDots } from "react-icons/bi";
+import { IoMdNotifications } from "react-icons/io";
+import { FaPeopleRobbery } from "react-icons/fa6";
+import { AiFillHome } from "react-icons/ai";
+import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -182,6 +188,7 @@ const Home = () => {
     .then((res)=>{
    console.log(res)     
    setlock(false)
+   window.location.reload();
     }).catch(error =>{
 console.log(error)
 toast(error.response.data.error)
@@ -406,14 +413,13 @@ toast(error.response.data.error)
             }
           </main>
 
-          <main className="reverse ">
+          <main className="reverse">
             {display &&
               display.map((el, i) => (
                 <div   key={i}>
-                  <main className=" my-3 p-2  text-">
+                  <main className=" my-3 text- bork1">
                     <div>
                     <div className="d-flex  justify-content-between align-items-center">
-
                     <div className="d-flex align-items-center p-2 ">
                       <img src={el.author.profilePic} className="bluh img-fluid " alt="" srcset="" />
                       <h5 className="px-2">{capitalizeFirstLetter(el.author.username)}</h5>
@@ -460,15 +466,15 @@ toast(error.response.data.error)
                     
                     </div>
 
-                    <div className="text-center">
+                    <div className="text-center mano1">
                       <div className="mango text-start">
                       <p className="fs-6  fw-bold  ">{capitalizeFirstLetter(el.caption)}</p>
                       </div>
-                      <div>
+                      <div className="" >
 
                       <img
                         src={el.image}
-                        className="news img-fluid "
+                        className="news  "
                         
                         alt=""
                         srcset=""
@@ -479,6 +485,7 @@ toast(error.response.data.error)
                     <div className="mango ">
                       
                       <p>{el.likes?   el.likes.length : 0} Likes</p>
+                      <div className="bg12 ">
                       <button
                         onClick={() => handleLikeButton(i, el)}
                         className="btn border bg-transparent text-light mx-2 "
@@ -487,6 +494,8 @@ toast(error.response.data.error)
                       </button>
 
                       <button onClick={()=> handleComment(el._id, i)} className="btn border bg-transparent"><FaRegComment  className="text-light"/></button>
+                     
+                      </div>
                       {showComment[i] && (
 
                       <div className="d-flex bg-light-subtle p-2  " key={i}> 
@@ -543,12 +552,80 @@ toast(error.response.data.error)
                       </div>}
                     </div>
                 </div> 
-                 </main><hr />
+                 </main>
                 </div>
               ))}
           </main>
         </section>
         </main>
+
+        <main className="wof1">
+        <div className="pt-3 px-2 m-2 gap-3 justify-content-between bov4 align-items-center">
+            <Link
+              to={"/Dashboard/Home"}
+              className=" d-flex align-items-center text-decoration-none color text-white lin  fs-5 gap-2  "
+            >
+              <AiFillHome className="" />
+              Home
+            </Link>
+            <Link
+              to={"/dashboard/Network"}
+              className="d-flex align-items-center  text-decoration-none color text-white lin  fs-5 gap-2 my-3"
+            >
+              <FaPeopleRobbery />
+              My Network
+            </Link>
+
+            <Link
+              to={"/chats"}
+              className="d-flex align-items-center  text-decoration-none color text-white lin  fs-5 gap-2 my-3"
+            >
+              <BiSolidMessageRoundedDots />
+              Messaging
+            </Link>
+            <Link
+              to={"/notifications"}
+              className="d-flex align-items-center  text-decoration-none  lin text-white   fs-5 gap-2 my-3"
+            >
+              <IoMdNotifications />
+              Notification
+            </Link>
+  
+          
+          </div>
+          <div className="pt-3 px-2 m-2 gap-3 justify-content-between bov4 align-items-center">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora nobis tempore fuga repudiandae reiciendis unde laudantium rem alias impedit corrupti, ipsam asperiores.</p>
+            </div>
+        </main>
+        {/* <main className="voj3">
+        <div className="d-flex p-2 px-4 justify-content-between align-items-center">
+            <Link
+              to={"/Dashboard/Home"}
+              className=" d-flex align-items-center text-decoration-none color text-white lin  fs-2 gap-2" >
+              <AiFillHome className="" />
+            </Link>
+            <Link
+              to={"/dashboard/Network"}
+              className="d-flex align-items-center  text-decoration-none color text-white lin  fs-2 gap-2"
+            >
+              <FaPeopleRobbery />
+            </Link>
+
+            <Link
+              to={"/chats"}
+              className="d-flex align-items-center  text-decoration-none color text-white lin  fs-2 gap-2"
+            >
+              <BiSolidMessageRoundedDots />
+            </Link>
+            <Link
+              to={"/notifications"}
+              className="d-flex align-items-center  text-decoration-none  lin text-white   fs-2 gap-2"
+            >
+              <IoMdNotifications />
+            </Link>
+  
+          </div>
+        </main> */}
       </section>
       <ToastContainer />
     </>

@@ -14,7 +14,7 @@ const User = () => {
   
 
 useEffect(() => {
-  axios.get("http://localhost:4345/users/verify",{
+  axios.get("https://lnbackend.onrender.com/users/verify",{
     headers:{
       Authorization: `bearer ${token}`
     }
@@ -52,7 +52,7 @@ useEffect(() => {
         }
 
      function handleProfile(){
-       axios.post("http://localhost:4345/users/propic",{file},
+       axios.post("https://lnbackend.onrender.com/users/propic",{file},
        {
         headers: {
           Authorization: `bearer ${token}`,

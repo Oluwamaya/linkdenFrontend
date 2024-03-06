@@ -136,20 +136,21 @@ const Dashboard = () => {
 
   return (
     <>
-      <main className=" frok bg-danger w-100">
-        <nav className=" align-items-center justify-content-around bg-light shad12">
-          <div className="d-flex align-items-center">
+      <main className=" frok w-100">
+        <nav className=" align-items-center justify-content-between shad12">
+          <div className="d-flex align-items-center w-75 justify-content-around">
             <div>         
             <img
               src={require("../image/news.jpg")}
               className="log img-fluid "
               alt="icon"
+              width={100}
             />
             </div>
-            <main className="drop2">
-              <div className="few ">
+            <main className="drop2 ">
+              <div className="few p-3  d-flex align-items-center gap-2">
                 {/* <div onMous></div> */}
-                <p className="mt-2 text-muted">
+                <p className="mt-3 text-muted">
                   <FaSearch />
                 </p>
                 <input
@@ -157,8 +158,8 @@ const Dashboard = () => {
                   value={searchQuery}
                   onChange={(e)=>handleSearchChange(e)}
                   // onChange={displayme}
-                  placeholder=" Search "
-                  className="search"
+                  placeholder=" Search"
+                  className="search mox6"
                 />
               </div>
               <div className="down2">
@@ -187,8 +188,8 @@ const Dashboard = () => {
               </div>
             </main>
           </div>
-          <div className="d-flex pt-1 justify-content-between  align-items-center w-75">
-            <Link
+          <div className="d-flex pt-1 justify-content-between align-items-center">
+            {/* <Link
               to={"/Dashboard/Home"}
               className=" d-flex align-items-center flex-column text-decoration-none color lin "
             >
@@ -216,143 +217,46 @@ const Dashboard = () => {
             >
               <IoMdNotifications />
               Notification
-            </Link>
+            </Link> */}
             <Link to={"/user"}>
               <img
                 src={message.profilePic}
-                className="rounded rounded-5 me-5 img-fluid bluh"
+                className="rounded rounded-5 me-2 img-fluid bluh"
                 alt=""
                 srcset=""
               />
-              {/* <img className='text-black bg-secondary rounded-circle text-light p-2 h5 fw-bolder'>{message && message.username}</> */}
             </Link>
-
-            {/* </main> */}
           </div>
         </nav>
+        <main className="voj3">
+        <div className="d-flex p-2 px-4 justify-content-between align-items-center">
+            <Link
+              to={"/Dashboard/Home"}
+              className=" d-flex align-items-center text-decoration-none color text-white lin  fs-2 gap-2" >
+              <AiFillHome className="" />
+            </Link>
+            <Link
+              to={"/dashboard/Network"}
+              className="d-flex align-items-center  text-decoration-none color text-white lin  fs-2 gap-2"
+            >
+              <FaPeopleRobbery />
+            </Link>
 
-        <main className="posi">
-          <nav className=" justify-content-between align-items-center bg-light kinl position-relative w-100 p-2 mt-5">
-            <div className="d-flex align-items-center">
-            <div>         
-            <img
-              src={require("../image/news.jpg")}
-              className="log img-fluid "
-              alt="icon"
-            />
-            </div>
-              <main className="drop2">
-                <div className="few ">
-                  {/* <div onMous></div> */}
-                  <p className="mt-2 text-muted">
-                    <FaSearch />
-                  </p>
-                  <input
-                    type="search"
-                    value={searchQuery}
-                    onInput={handleSearchChange}
-                    placeholder=" Search "
-                    className="search"
-                  />
-                </div>
-                <div className="down2">
-                  {showmeall && 
-                    <div className=" text-dark py-2">
-                      <div>
-                        <ul>
-                          <div className="d-flex align-items-center ">
-                            <h5 className="fw-bold">Recent search</h5>
-                            {/* <button className='rounded-circle py-1 px-2 mx-2  border-0'  onClick={dntshow}>X</button> */}
-                          </div>
-                          {Array.isArray(searchResults) &&
-                            added.map((userInfo) => (
-                              <div key={userInfo._id}>
-                                <li
-                                  onClick={() =>
-                                    networkPage({ user: userInfo })
-                                  }
-                                >
-                                  {capitalizeFirstLetter(userInfo.username)}
-                                </li>
-                              </div>
-                            ))}
-                        </ul>
-                      </div>
-                    </div>
-                  }
-                </div>
-              </main>
-            </div>
-            <main className="drop1 ">
-              <div className="">
-                {close ? (
-                  <button onClick={closee}>
-                    <IoCloseSharp className="klori" />
-                  </button>
-                ) : (
-                  <button className="bgb" onClick={opened}>
-                    <FaBars className="klori" />{" "}
-                  </button>
-                )}
-                {close ? (
-                  <div className="down1  px-2">
-                    <div className="gengi">
-                      <Link
-                        to={"/Dashboard/Home"}
-                        className=" d-flex align-items-center  gap-2 h5 fw-bold text-decoration-none color lin "
-                      >
-                        <AiFillHome />
-                        Home
-                      </Link>
-                    </div>
-                    <div className="gengi">
-                      <Link
-                        to={"/dashboard/Network"}
-                        className="d-flex align-items-center  gap-2 h5 fw-bold text-decoration-none color lin "
-                      >
-                        <FaPeopleRobbery />
-                        My Network
-                      </Link>
-                    </div>
-                    <div className="gengi">
-                      <Link
-                        to={"/chats"}
-                        className="d-flex align-items-center  gap-2 h5 fw-bold  text-decoration-none color lin "
-                      >
-                        <BiSolidMessageRoundedDots />
-                        Messaging
-                      </Link>
-                    </div>
-                    <div className="gengi">
-                      <Link
-                        to={"/notifications"}
-                        className="d-flex align-items-center text-decoration-none  gap-2 h5 fw-bold lin "
-                      >
-                        <IoMdNotifications className="" />
-                        Notification
-                      </Link>
-                    </div>
-                    <div className="gengi">
-                      <Link
-                        className="d-flex align-items-center text-decoration-none  gap-2 h5 fw-bold lin "
-                        to={"/user"}
-                      >
-                        <FaUserCircle />
-                        Profile
-                      </Link>
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-              </div>
-            </main>
-          </nav>
+            <Link
+              to={"/chats"}
+              className="d-flex align-items-center  text-decoration-none color text-white lin  fs-2 gap-2"
+            >
+              <BiSolidMessageRoundedDots />
+            </Link>
+            <Link
+              to={"/notifications"}
+              className="d-flex align-items-center  text-decoration-none  lin text-white   fs-2 gap-2"
+            >
+              <IoMdNotifications />
+            </Link>
+  
+          </div>
         </main>
-        <div>
-          <p>lor</p>
-        </div>
-      
         <Outlet />
       </main>
       <ToastContainer />

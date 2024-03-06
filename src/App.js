@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const App = () => {
+  const [loading, setloading] = useState(true)
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
@@ -39,14 +40,17 @@ const App = () => {
     onSubmit: async (value) => {
       console.log(value);
       if (value) {
+      setloading(false)
         await axios
           .post("https://lnbackend.onrender.com/users/signup", value)
           .then((res) => {
             console.log(res.data.message);
             toast(res.data.message)
             navigate("/sign")
+            setloading(false)
           })
           .catch((error) => {
+            setloading(true)
             console.log(error);
             toast(error.response.data.message)
           });
@@ -206,9 +210,16 @@ const App = () => {
              <p className="brext">{formik.touched.confirmpassword && formik.errors.confirmpassword}</p>
           </div>
 
-          <button title="Sign In" type="submit" class="sign-in_btn">
-            <span>Sign In</span>
-          </button>
+      {   
+      loading ?  
+      <button title="Sign In" type="submit" class="sign-in_btn">
+            <span>Sign Up</span>
+          </button> :
+          <button class="sign-in_btn" type="button" disabled>
+          <span class="spinner-border spinner-border-sm mx-2" aria-hidden="true"></span>
+          <span class="" role="status">Signing up....</span>
+        </button>
+        }
 
           <div class="separator">
             <hr/>

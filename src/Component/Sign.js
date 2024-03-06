@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useFormik } from 'formik';
 import * as yup from 'yup'
 import axios from 'axios';
-import { FaLongArrowAltRight } from "react-icons/fa";
+// import { FaLongArrowAltRight } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Sign = () => {
 	const [showed, setshowed] = useState(true)
+	const [loading, setloading] = useState(true)
 
 	const navigate = useNavigate()
 	const formik = useFormik({
@@ -35,8 +36,8 @@ const Sign = () => {
 
 
 		onSubmit: (value) => {
+			setloading(false)
 			//  console.log(value)
-			alert("done")
 			if (value) {
 				axios.post("https://lnbackend.onrender.com/users/signin", value)
 					.then((res) => {
@@ -47,6 +48,7 @@ const Sign = () => {
 						navigate('/dashboard/Home')
 
 					}).catch((error) => {
+						setloading(true)
 						console.log(error)
 						toast(`${error.response.data.message} Confirm your email & password`)
 					})
@@ -158,11 +160,16 @@ const Sign = () => {
 					</div>
 					</div>
 
-
+					{   
+					loading ?  
 					<button title="Sign In" type="submit" class="sign-in_btn">
 						<span>Sign In</span>
-					</button>
-
+						</button> :
+						<button class="sign-in_btn" type="button" disabled>
+						<span class="spinner-border spinner-border-sm mx-2" aria-hidden="true"></span>
+						<span class="" role="status">Signing in....</span>
+						</button>
+					}
 					<div class="separator">
 						<hr />
 						<span>Or</span>
