@@ -35,8 +35,6 @@ const Sign = () => {
     
 
 	 onSubmit: (value)=>{
-    //  console.log(value)
-	alert("done")
 	 if (value) {
 		axios.post("https://lnbackend.onrender.com/users/signin", value)
 		.then((res)=>{
@@ -44,6 +42,7 @@ const Sign = () => {
 			localStorage.setItem("Ln Token", res.data.token)
 		        // console.log(res.data.message)
 			toast(res.data.message)
+			alert(res.data.message)
 			navigate('/dashboard/Home')
 
 		}).catch((error)=>{

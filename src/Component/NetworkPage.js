@@ -20,9 +20,9 @@ import { IoChatbubblesOutline } from "react-icons/io5";
 const NetworkPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isfetching, allFriend, isfetchingError } = useSelector(
-    (state) => state.FriendSlice
-  );
+
+  // const { isfetching, allFriend, isfetchingError } = useSelector(
+  //   (state) => state.FriendSlice);
   // console.log(allFriend);
 
   const { id } = useParams();
@@ -84,11 +84,11 @@ const NetworkPage = () => {
       });
   }, []);
 
-  function getallFriends() {
+  const  getallFriends = async ()=> {
     const identity = disInfo._id;
     console.log(identity);
 
-    axios
+  await  axios
       .post("http://localhost:4345/users/fetch", { identity })
       .then((res) => {
         // console.log(res);
@@ -153,38 +153,38 @@ const NetworkPage = () => {
       });
   };
 
-  useEffect(() => {
-    const getmessages = async () => {
-      try {
-        const userId = await disInfo._id;
-        const friendID = await friendId._id;
-         await axios.get(`http://localhost:4345/users/getChatMessages/${userId}/${friendID}`)
-         .then((res)=>{
-          setBest(res.data.messages)
-         }).catch((error)=>{
-          console.log(error)
-         })
+  // useEffect(() => {
+  //   const getmessages = async () => {
+  //     try {
+  //       const userId = await disInfo._id;
+  //       const friendID = await friendId._id;
+  //        await axios.get(`http://localhost:4345/users/getChatMessages/${userId}/${friendID}`)
+  //        .then((res)=>{
+  //         setBest(res.data.messages)
+  //        }).catch((error)=>{
+  //         console.log(error)
+  //        })
         
-        // Update your state or do something with the fetched data
-      } catch (error) {
-        console.log(error);
+  //       // Update your state or do something with the fetched data
+  //     } catch (error) {
+  //       console.log(error);
 
-    };
-  }
+  //   };
+  // }
   
-    // Call getmessages initially
-    getmessages();
+  //   // Call getmessages initially
+  //   getmessages();
   
-    // Setup interval to call getmessages every 2 seconds
-    const intervalId = setInterval(() => {
-      getmessages();
-    }, 1000);
+  //   // Setup interval to call getmessages every 2 seconds
+  //   const intervalId = setInterval(() => {
+  //     getmessages();
+  //   }, 1000);
   
-    // Cleanup: Clear the interval when the component is unmounted or when dependency array changes
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [disInfo._id, friendId._id]); // Add dependencies that should trigger a re-fetch
+  //   // Cleanup: Clear the interval when the component is unmounted or when dependency array changes
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [disInfo._id, friendId._id]); // Add dependencies that should trigger a re-fetch
   
 
 
