@@ -17,6 +17,7 @@ import { FaBars } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 
+
 const Dashboard = () => {
   const { isAdding, added, addingError } = useSelector(
     (state) => state.findUser
@@ -256,6 +257,7 @@ const Dashboard = () => {
             </Link>
   
           </div>
+
         </main>
         <Outlet />
       </main>
