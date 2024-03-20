@@ -57,7 +57,7 @@ const NetworkPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4345/users/verify", {
+      .get("https://lnbackend.onrender.com/users/verify", {
         headers: {
           Authorization: `bearer ${token}`,
         },
@@ -88,8 +88,12 @@ const NetworkPage = () => {
     const identity = disInfo._id;
     console.log(identity);
 
+    axios
+      .post("https://lnbackend.onrender.com/users/fetch", { identity })
+
   await  axios
       .post("http://localhost:4345/users/fetch", { identity })
+
       .then((res) => {
         // console.log(res);
         setshowFriends(res.data.arr);
@@ -140,7 +144,7 @@ const NetworkPage = () => {
     };
     console.log(value);
     axios
-      .post("http://localhost:4345/users/addnewfriend", { value })
+      .post("https://lnbackend.onrender.com/users/addnewfriend", { value })
       .then((res) => {
         console.log(res);
         console.log(res.data.message);
@@ -158,7 +162,11 @@ const NetworkPage = () => {
   //     try {
   //       const userId = await disInfo._id;
   //       const friendID = await friendId._id;
+
+  //        await axios.get(`https://lnbackend.onrender.com/users/getChatMessages/${userId}/${friendID}`)
+
   //        await axios.get(`http://localhost:4345/users/getChatMessages/${userId}/${friendID}`)
+
   //        .then((res)=>{
   //         setBest(res.data.messages)
   //        }).catch((error)=>{
@@ -230,7 +238,7 @@ const NetworkPage = () => {
     console.log(value);
     // socket.emit("message", value);
     axios
-      .post("http://localhost:4345/users/BestPost", { value })
+      .post("https://lnbackend.onrender.com/users/BestPost", { value })
       .then((res) => {
         console.log(res);
         setchat("")
@@ -257,7 +265,7 @@ const NetworkPage = () => {
     };
      console.log(updatedMessage);
     // Modify the endpoint to your actual server endpoint for updating messages
-     await axios.post("http://localhost:4345/users/updateChatMessage",{updatedMessage})
+     await axios.post("https://lnbackend.onrender.com/users/updateChatMessage",{updatedMessage})
       .then((response)=>{
         console.log(response.data);
         
