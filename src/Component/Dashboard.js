@@ -12,6 +12,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import _debounce from "lodash/debounce";
 import { fetchingfriends, fetchedFriends, fetchingError } from "../Redux/Slice";
+import { isFetchingUser, fetchedUser } from "../Redux/Userslice";
 import { useDispatch, useSelector } from "react-redux";
 import { FaBars } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
@@ -40,6 +41,7 @@ const Dashboard = () => {
       })
       .then((res) => {
         // console.log(res.data.message)
+        dispatch(fetchedUser(res.data.user))
         setmessage(res.data.user);
         // console.log(res.data.user)
       })
@@ -165,10 +167,10 @@ const Dashboard = () => {
               </div>
               <div className="down2">
                 {showmeall &&
-                  <div className=" text-dark  saes py-2 ms-2">
+                  <div className=" text-dark  saes py-2 ms-2 f">
                     <div>
                       <ul>
-                        <div className="d-flex align-items-center ">
+                        <div className="d-flex align-items-center fl">
                           <h5 className="fw-bold">Recent search</h5>
                           {/* <button className='rounded-circle py-1 px-2 mx-2  border-0'  onClick={dntshow}>X</button> */}
                         </div>
@@ -259,6 +261,12 @@ const Dashboard = () => {
           </div>
 
         </main>
+
+        {/* <div>
+          <p>lor</p>
+        </div> */}
+      
+
         <Outlet />
       </main>
       <ToastContainer />

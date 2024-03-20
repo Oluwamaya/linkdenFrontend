@@ -21,6 +21,7 @@ const Sign = () => {
 			password: ""
 
 		},
+
 		validationSchema: yup.object({
 			email: yup
 				.string()
@@ -56,6 +57,41 @@ const Sign = () => {
 				toast('invalid credentials')
 			}
 		}
+
+     validationSchema: yup.object({
+        email:yup 
+		.string()
+		.required("Email cannot be empty")
+		.email("Must be a valid email"),
+
+		password:yup 
+		.string()
+		.min(5, "Password is too short")
+		.required("Password cannot be empty")
+		.max(10,'maximum of 10')
+	 }),
+    
+
+	 onSubmit: (value)=>{
+	 if (value) {
+		axios.post("https://lnbackend.onrender.com/users/signin", value)
+		.then((res)=>{
+			// console.log(res)
+			localStorage.setItem("Ln Token", res.data.token)
+		        // console.log(res.data.message)
+			toast(res.data.message)
+			alert(res.data.message)
+			navigate('/dashboard/Home')
+
+		}).catch((error)=>{
+			console.log(error)
+			toast(`${error.response.data.message} Confirm your email & password`)
+		})
+	 }else{
+		toast('invalid credentials')
+	 }
+	 }
+
 	})
 
 	const signup = () => {
