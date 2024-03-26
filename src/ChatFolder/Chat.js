@@ -33,6 +33,22 @@ const Chat = () => {
 
 
   useEffect(() => {
+    axios
+      .get("https://lnbackend.onrender.com/users/verify", {
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        // console.log(res.data.user)
+        setfirst(res.data.user);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error.response.data.message);
+        navigate("/sign");
+      });
+
     axios.get('http://localhost:4345/users/verify', {
       headers: {
         Authorization: `bearer ${token}`,
@@ -44,6 +60,7 @@ const Chat = () => {
     .catch((error) => {
       // Handle error
     });
+
   }, []);
 
   const getAllFriends = async () => {
@@ -57,6 +74,29 @@ const Chat = () => {
   };
 
   useEffect(() => {
+
+    const getmessages = async () => {
+      try {
+        const userId = (await first) && first._id;
+        const friendID = (await display) && display._id;
+
+        await axios
+          .get(
+            `https://lnbackend.onrender.com/getChatMessages/${userId}/${friendID}`
+          )
+          .then((res) => {
+            if (res.data.messages) {
+              setBest(res.data.messages);
+              // console.log(best);
+            }
+          })
+          .catch((error) => {
+            // console.log(error);
+          });
+
+        // Update your state or do something with the fetched data
+      } catch (error) {
+        console.log(error);
     getAllFriends();
   }, [user && user._id]);
 
@@ -94,6 +134,7 @@ const Chat = () => {
         setDummyState(prevState => !prevState); 
       }else{
         alert("Not message")
+
       }
     });
     newSocket.on("receiveVoiceNote" , (audiomessage)=>{
@@ -148,6 +189,24 @@ const Chat = () => {
       setTypeText('');
      
     }
+
+  }, [inputtext]);
+
+  const sendText = () => {
+    const value = {
+      receiverId: first._id,
+      senderId: display._id,
+      content: inputtext,
+      messageType: "",
+    };
+    console.log(value);
+    // socket.emit("message", value);
+    axios
+      .post("https://lnbackend.onrender.com/users/BestPost", { value })
+      .then((res) => {
+        console.log(res);
+        setinputtext("");
+
   };
   const sendImage =()=>{
     alert('imagesent')
@@ -158,6 +217,7 @@ const Chat = () => {
         recipient: currentChatProfile._id,
         ImageData: selectedImage,
         timestamp: new Date().toISOString(),
+
       })
       setSelectedImage(null);
       setThird(false)
@@ -186,6 +246,51 @@ const Chat = () => {
     }
   };
 
+  const handleEdit = async (el, i) => {
+    // Implement the logic to send a POST request to update the chat message
+    const updatedMessage = {
+      messageId: el._id,
+      content: editedMessage,
+    };
+    console.log(updatedMessage);
+    // Modify the endpoint to your actual server endpoint for updating messages
+    await axios
+      .post("https://lnbackend.onrender.com/users/updateChatMessage", { updatedMessage })
+      .then((response) => {
+        // console.log(response.data);
+        if (hideEdit) {
+          sethideEdit(false);
+        }
+        // Assuming the server successfully updates the message, update the state accordingly
+        const updatedBest = [...best];
+        updatedBest[i].content = editedMessage;
+        setBest(updatedBest);
+        // Toggle off editing mode
+        toggleEditing(null);
+      })
+      .catch((error) => {
+        console.error("Error updating message:", error);
+        // You may want to handle errors or provide user feedback here
+      });
+  };
+
+  // Update the handleDelMessage function
+  const handleDelMessage = (messageId) => {
+    const value = {
+      senderId: display._id,
+      messageId,
+    };
+    axios
+      .post("https://lnbackend.onrender.com/users/delete", { value })
+      .then((res) => {
+        if (
+          res.status === 200 &&
+          res.data.message === "Message deleted successfully."
+        ) {
+          if (hideEdit) {
+            sethideEdit(false);
+          }
+
   const handleStopTyping = () => {
     if (socket) {
       socket.emit('stopTyping', user._id);
@@ -195,6 +300,7 @@ const Chat = () => {
   const joinRoom = (senderId, recipient) => {
     socket.emit('joinRoom', { senderId, recipient });
   };
+
 
   const pressMe = (el) => {
     setCurrentChatProfile(el);

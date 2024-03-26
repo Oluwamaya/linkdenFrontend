@@ -22,6 +22,7 @@ body {
 .shad12{
   display: flex;
   position: fixed;
+  background-color: white;
   top: 0;
   right: 0;
   left: 0;
@@ -109,7 +110,7 @@ code {
   margin: 0 20px;
   /* box-shadow: 2px 2px 7px 2px black !important; */
 }
-@media (max-width:700px) {
+/* @media (max-width:700px) {
   .kinl{
     display: flex !important;
     
@@ -119,7 +120,7 @@ code {
     display: none !important;
   }
 
-}
+} */
 .huh {
  display: inline-block;
  border-radius: 20px !important;
@@ -383,4 +384,65 @@ code {
   }
 }
 
+
+
+
+
+
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.profile-bio {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.profile-location {
+  font-size: 14px;
+  color: #888;
+}
+
+.edit-profile-button {
+  margin-top: 10px;
+  margin-right:10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-profile-button:hover {
+  background-color: #0056b3;
+}
 

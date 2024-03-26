@@ -57,10 +57,33 @@
 }
 .reverse{
     display: flex;
+    /* background-color: darkcyan; */
     flex-direction: column-reverse;
     /* border: 1px solid gold ; */
     border-radius: 20px;
 }
+
+.mez1{
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.wor{
+  background-color: rgba(244, 243, 243, 0.128);
+  padding: -1%;
+}
+.beg4{
+  display: flex;
+  flex-direction: column;
+}
+
+.lead{
+  color: #8b8585;
+  margin-top: 3px;
+  /* width: 20%; */
+}
+
 
 .drop:focus-within .down{
     display: block !important;
@@ -153,4 +176,64 @@
   /* button click effect*/
   .Btn:active {
     transform: translate(2px ,2px);
+  }
+
+  .input81 {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    background-color: #0D1117;
+    justify-content: center;
+    border-radius: 5px
+  }
+  
+  .value {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .value:not(:active):hover,
+  .value:focus {
+    background-color: #21262C;
+  }
+  
+  .value:focus,
+  .value:active {
+    background-color: #1A1F24;
+    outline: none;
+  }
+  
+  .value::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: -10px;
+    width: 5px;
+    height: 80%;
+    background-color: #2F81F7;
+    border-radius: 5px;
+    opacity: 0;
+  }
+  
+  .value:focus::before,
+  .value:active::before {
+    opacity: 1;
+  }
+  
+  .value svg {
+    width: 15px
+  }
+  
+  .input81:hover > :not(.value:hover) {
+    transition: 300ms;
+    filter: blur(1px);
+    transform: scale(0.95,0.95);
   }
